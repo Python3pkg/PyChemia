@@ -57,7 +57,7 @@ def abihist2xyz(abivar, basename, datasets, time='all'):
         else:
             history = abifile.files['tmpout'] + "_DS" + str(idts) + "_HIST"
         if os.path.isfile(history):
-            print('Reading ', history)
+            print(('Reading ', history))
             nchist = pychemia.code.abinit.netcdf2dict(history)
 
             # Setting the output file
@@ -72,7 +72,7 @@ def abihist2xyz(abivar, basename, datasets, time='all'):
                 else:
                     filep = basename + '_DS' + str(idts) + '_HIST_itime' + str(time) + '.xyz'
 
-            print('Writing ', filep)
+            print(('Writing ', filep))
             wf = open(filep, 'w')
 
             # Getting the atomic structure
@@ -120,8 +120,8 @@ def get_input_dts(filep, dataset):
     if dataset == 0:
         datasets = abivar.get_dtsets_keys()
     elif not str(dataset) in abivar.get_dtsets_keys():
-        print('ERROR No such dataset index:', dataset)
-        print('Valid values are:', abivar.get_dtsets_keys())
+        print(('ERROR No such dataset index:', dataset))
+        print(('Valid values are:', abivar.get_dtsets_keys()))
         exit(1)
     else:
         datasets = [dataset]
@@ -166,7 +166,7 @@ if __name__ == '__main__':
                 has_input = False
                 hist = True
             else:
-                print('Unknown option. --' + option)
+                print(('Unknown option. --' + option))
 
     filename = sys.argv[-1]
     if not os.path.isfile(filename):

@@ -13,9 +13,9 @@ class CrystalSymmetryTest(unittest.TestCase):
         st = pychemia.code.vasp.read_poscar('pychemia/test/data/SbBi/POSCAR')
         cs = pychemia.crystal.CrystalSymmetry(st)
         assert cs.number() == 160
-        assert cs.symbol() == u'R3m'
+        assert cs.symbol() == 'R3m'
         pr = cs.find_primitive()
         assert np.abs(st.volume - pr.volume) < 1E-6
-        assert cs.crystal_system() == u'Trigonal'
+        assert cs.crystal_system() == 'Trigonal'
         ss = cs.symmetrize()
         assert np.abs(st.volume - ss.volume) < 1E-6

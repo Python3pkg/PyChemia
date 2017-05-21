@@ -39,27 +39,27 @@ if __name__ == "__main__":
     else:
         host = args.host
 
-    print("Host:                  %s" % host)
-    print("Database Name:         %s" % args.dbname)
-    print("SSL:                   %s" % args.ssl)
-    print("Create new database:   %s" % args.new)
-    print("Generation Size:       %s" % args.generation_size)
-    print("Abinit input:          %s" % args.abinit_input)
+    print(("Host:                  %s" % host))
+    print(("Database Name:         %s" % args.dbname))
+    print(("SSL:                   %s" % args.ssl))
+    print(("Create new database:   %s" % args.new))
+    print(("Generation Size:       %s" % args.generation_size))
+    print(("Abinit input:          %s" % args.abinit_input))
 
     if not os.path.exists(args.abinit_input):
         raise ValueError("ERROR: File %s not found" % args.abinit_input)
 
     if args.new:
         print("Creating new database")
-        admin_name = input('Admin Username:')
-        admin_passwd = input('Admin Password:')
+        admin_name = eval(input('Admin Username:'))
+        admin_passwd = eval(input('Admin Password:'))
 
-    user = input('Username:')
+    user = eval(input('Username:'))
     if user == '':
         user = None
         passwd = None
     else:
-        passwd = input('Password:')
+        passwd = eval(input('Password:'))
 
     if args.ssl is None:
         ssl = False

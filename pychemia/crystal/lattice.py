@@ -536,7 +536,7 @@ class Lattice:
         lattice = self.copy()
         assert len(rpos) == len(symbols)
         natom = len(rpos)
-        for i, j in combinations(range(natom), 2):
+        for i, j in combinations(list(range(natom)), 2):
             ret = lattice.distance2(rpos[i], rpos[j])
             mindist = sys.float_info.max
             for k in ret:

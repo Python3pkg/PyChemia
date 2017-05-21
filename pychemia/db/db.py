@@ -57,7 +57,7 @@ class PyChemiaDB:
                 raise ValueError('Wrong version of pymongo')
             self._client.server_info()
         except ServerSelectionTimeoutError:
-            print("ERROR: No connexion could be established to server: %s" % uri)
+            print(("ERROR: No connexion could be established to server: %s" % uri))
             exit(1)
 
         self.db = self._client[name]
@@ -122,7 +122,7 @@ class PyChemiaDB:
                 entry['structure'] = structure
             else:
                 print('ERROR: Could not process the structure')
-                print(type(structure))
+                print((type(structure)))
         if properties is not None:
             entry['properties'] = properties
         if status is not None:
@@ -188,8 +188,8 @@ class PyChemiaDB:
             valid = True
             if sum(comp.composition.values()) % sum(composition.values()) != 0:
                 valid = False
-            vect1 = np.float64(np.sort(comp.composition.values()))
-            vect2 = np.float64(np.sort(composition.values()))
+            vect1 = np.float64(np.sort(list(comp.composition.values())))
+            vect2 = np.float64(np.sort(list(composition.values())))
             v12 = vect1 / vect2
             if not np.all(v12 == v12[0]):
                 valid = False
@@ -198,7 +198,7 @@ class PyChemiaDB:
                     valid = False
 
             if valid:
-                print(comp.composition)
+                print((comp.composition))
                 ret.append(entry['_id'])
         return ret
 
@@ -277,9 +277,9 @@ class PyChemiaDB:
 
         pool = Pool(processes=nparal)
         cursor = self.entries.find({}, no_cursor_timeout=True)
-        print(cursor.count())
+        print((cursor.count()))
         entries = [entry['_id'] for entry in cursor]
-        ret = pool.map(function, itertools.izip(itertools.repeat(self.db_settings), entries))
+        ret = pool.map(function, zip(itertools.repeat(self.db_settings), entries))
         cursor.close()
         return ret
 
@@ -296,11 +296,11 @@ class PyChemiaDB:
             self.update(entry['_id'], structure=new_structure)
 
     def get_tags(self):
-        entries = [x['status'].keys() for x in self.entries.find({}, {'status': 1})]
+        entries = [list(x['status'].keys()) for x in self.entries.find({}, {'status': 1})]
         ret = []
         for i in entries:
             for j in i:
-                if j not in [u'target_forces', u'relaxation', u'lock'] and j not in ret:
+                if j not in ['target_forces', 'relaxation', 'lock'] and j not in ret:
                     ret.append(j)
         return ret
 

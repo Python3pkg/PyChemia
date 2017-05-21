@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import os
 import re
 import time
@@ -207,7 +207,7 @@ class OrbitalDFTU(Population):
 
         for i in range(self.num_indep_matrices):
             nelect = self.num_electrons_dftu[i]
-            val = [x for x in list(itertools.product(range(2), repeat=self.ndim)) if sum(x) == nelect]
+            val = [x for x in list(itertools.product(list(range(2)), repeat=self.ndim)) if sum(x) == nelect]
             ii = val[np.random.randint(len(val))]
             dd = np.zeros(self.ndim)
             matrix_i[i] = list(ii)

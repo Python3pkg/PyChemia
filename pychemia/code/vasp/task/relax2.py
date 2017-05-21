@@ -176,7 +176,7 @@ class IonRelaxation2(Relaxator, Task):
         vj.input_variables.set_density_for_restart()
         vj.set_kpoints(self.kpoints)
         vj.set_inputs()
-        print('Launching VASP using %d processes' % nparal)
+        print(('Launching VASP using %d processes' % nparal))
         vj.run(use_mpi=True, mpi_num_procs=nparal)
         if self.waiting:
             vj.runner.wait()

@@ -26,7 +26,7 @@ def compare_params(path):
     abinitout = popu.get_final_abinit_out(path)
 
     if not os.path.isfile(path+os.sep+'abinit.in'):
-        print('ERROR: No abinit.in found at %s' % path)
+        print(('ERROR: No abinit.in found at %s' % path))
         return
 
     # For making easier to see the values
@@ -42,14 +42,14 @@ def compare_params(path):
     odmatpawu = np.array(dmatpawu).reshape(-1, 5, 5)
     oparams = pychemia.population.orbitaldftu.dmatpawu2params(odmatpawu, 5)
 
-    print('PARAMETRIC REPRESENTATION found at %s' % abinitout)
+    print(('PARAMETRIC REPRESENTATION found at %s' % abinitout))
     for i in sorted(list(iparams.keys())):
         print(i)
         print('input')
-        print(iparams[i])
+        print((iparams[i]))
         print('output')
         print(i)
-        print(oparams[i])
+        print((oparams[i]))
 
     abo = pychemia.code.abinit.AbinitOutput(abinitout)
     if not abo.is_finished:
@@ -58,9 +58,9 @@ def compare_params(path):
         nres2 = abo.get_energetics()['nres2'][-1]
         etot = abo.get_energetics()['etot'][-1]
         nscf = len(abo.get_energetics()['etot'])
-        print("%30s ETOT: %15.6f NRES2: %15.6e NumSCF: %3d" % (path, etot, nres2, nscf))
+        print(("%30s ETOT: %15.6f NRES2: %15.6e NumSCF: %3d" % (path, etot, nres2, nscf)))
     except:
-        print("ERROR: Could not get energetics from %s" % abinitout)
+        print(("ERROR: Could not get energetics from %s" % abinitout))
 
 
 def create_population():
@@ -74,7 +74,7 @@ def prepare_folders(scrpath):
 
 def check_status(basepath, dirs):
 
-    print("%-40s %15s %15s %4s" % ("ABINIT output", "ETOT", 'nres2', 'nSCF'))
+    print(("%-40s %15s %15s %4s" % ("ABINIT output", "ETOT", 'nres2', 'nSCF')))
     for i in dirs:
         path = basepath+os.sep+i
         abinitout = popu.get_final_abinit_out(path)
@@ -88,9 +88,9 @@ def check_status(basepath, dirs):
             nres2 = abo.get_energetics()['nres2'][-1]
             etot = abo.get_energetics()['etot'][-1]
             nscf = len(abo.get_energetics()['etot'])
-            print("%-40s %15.6f %15.6e %4d" % (abinitout, etot, nres2, nscf))
+            print(("%-40s %15.6f %15.6e %4d" % (abinitout, etot, nres2, nscf)))
         except:
-            print("ERROR: Could not get final energetics from %s" % (abinitout))
+            print(("ERROR: Could not get final energetics from %s" % (abinitout)))
 
 
 def plot_status(basepath, dirs, nstep=50):
@@ -124,9 +124,9 @@ def plot_status(basepath, dirs, nstep=50):
                     Y[path]['etot'] = np.concatenate((Y[path]['etot'], yetot))
                     Y[path]['nres2'] = np.concatenate((Y[path]['nres2'], ynres2))
                     Y[path]['delta'] = np.concatenate((Y[path]['delta'], ydelta))
-                    print("%s ETOT:%15.6f NRES2=%15.6e Num SCF=%3d" % (path, etot, nres2, nscf))
+                    print(("%s ETOT:%15.6f NRES2=%15.6e Num SCF=%3d" % (path, etot, nres2, nscf)))
                 except:
-                    print("%s Failed processing output" % path)
+                    print(("%s Failed processing output" % path))
 
     # RESIDUAL
     plt.figure(figsize=(8, 11))
@@ -186,11 +186,11 @@ def plot_status(basepath, dirs, nstep=50):
 
 
 def plot_polar():
-    print('Computing duplicates in %d candidates' % len(popu.evaluated))
+    print(('Computing duplicates in %d candidates' % len(popu.evaluated)))
     dupes = popu.get_duplicates(popu.evaluated)
-    print('Number of duplicates    : %d' % len(dupes))
+    print(('Number of duplicates    : %d' % len(dupes)))
     nodupes = [x for x in popu.evaluated if x not in dupes]
-    print('Number of not duplicates: %d' % len(nodupes))
+    print(('Number of not duplicates: %d' % len(nodupes)))
 
     fig = plt.figure(figsize=(10, 1.2*len(nodupes)))
 
@@ -201,7 +201,7 @@ def plot_polar():
     M = 10
 
     grid = np.mgrid[0.05:0.9:complex(0, M), 0.05:0.9:complex(0, N)].T
-    print(grid.shape)
+    print((grid.shape))
 
     for i in range(N):
 
@@ -325,7 +325,7 @@ if __name__ == "__main__":
     if figname[-4] == '.':
         figname = figname[:-4]
 
-    passwd = input('Password:')
+    passwd = eval(input('Password:'))
 
     db_settings = {'name': args.name, 'host': args.host, 'user': args.dbuser, 'passwd': passwd}
     pcdb = pychemia.db.get_database(db_settings)

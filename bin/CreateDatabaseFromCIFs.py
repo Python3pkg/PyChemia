@@ -67,7 +67,7 @@ if __name__ == '__main__':
             elif option == 'ssl':
                 ssl = True
             else:
-                print('Unknown option. --' + option)
+                print(('Unknown option. --' + option))
 
     if dbname is None:
         help_info()

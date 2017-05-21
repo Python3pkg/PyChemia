@@ -63,8 +63,8 @@ class VaspOutput:
             self.array_sizes['NIONSTEPS'] = len(self.forces)
             pcm_log.debug('Number of Ionic steps: ' + str(self.array_sizes['NIONSTEPS']))
         else:
-            print('Forces and Positions could not be parsed : ', pos_forces.shape)
-            print('pos_forces =\n%s ' % pos_forces)
+            print(('Forces and Positions could not be parsed : ', pos_forces.shape))
+            print(('pos_forces =\n%s ' % pos_forces))
 
         fermi = re.findall(r'E-fermi\s+:\s+([-.\d]+)', self.data)
         fermi = np.array(fermi, dtype=float)
@@ -276,7 +276,7 @@ class VaspOutput:
                 try:
                     ret[key_value[0].strip()] = (float(key_value[1].split()[0]), key_value[1].split()[1])
                 except ValueError:
-                    print('Failed to parse: ', key_value)
+                    print(('Failed to parse: ', key_value))
         return ret
 
     def get_general_timing(self):
@@ -289,7 +289,7 @@ class VaspOutput:
                     try:
                         ret[key_value[0].strip()] = float(key_value[1].strip())
                     except ValueError:
-                        print('Failed to parse: ', key_value)
+                        print(('Failed to parse: ', key_value))
         return ret
 
     @property

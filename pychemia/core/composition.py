@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 from numpy import array, argsort
 from fractions import gcd as _gcd
 from math import pi
@@ -10,7 +10,7 @@ from collections import Mapping
 
 
 class Composition(Mapping):
-    u"""
+    """
     The class Composition is basically a dictionary with species as keys and
     number of atoms of that specie as values. The methods provided for Composition objects should
     not contain geometrical information or graph connectivity.
@@ -347,7 +347,7 @@ class Composition(Mapping):
             sortedspecies += presortedspecies
         else:
             sortedspecies = sorted(comp.species)
-        ret = u''
+        ret = ''
         for specie in sortedspecies:
             ret += '%s' % specie
             if comp.composition[specie] > 1:

@@ -48,7 +48,7 @@ class LatticePlot:
         for i in ws:
             pcm_log.debug(i)
             iscalars = np.ones(len(i))
-            itriangles = index + np.array(list(itertools.combinations(range(len(i)), 3)))
+            itriangles = index + np.array(list(itertools.combinations(list(range(len(i))), 3)))
             pcm_log.debug(iscalars)
             pcm_log.debug(itriangles)
             if triangles is None:

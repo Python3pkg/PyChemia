@@ -52,18 +52,18 @@ class IdealStrength(Task):
             tmpkp = pychemia.crystal.KPoints.optimized_grid(newst.lattice, kp_density=self.kp_density, force_odd=True)
 
             if ifactor < 1.0:
-                print('\nCompresing cell to %7.3f percent' % (ifactor * 100))
+                print(('\nCompresing cell to %7.3f percent' % (ifactor * 100)))
                 print('-------------------\n')
             elif ifactor > 1.0:
-                print('\nExpanding cell to %7.3f percent' % (ifactor * 100))
+                print(('\nExpanding cell to %7.3f percent' % (ifactor * 100)))
                 print('-------------------\n')
             else:
                 print('\nOriginal cell')
                 print('-------------\n')
 
             new_density = tmpkp.get_density_of_kpoints(newst.lattice)
-            print('KP Density: target: %d  new lattice: %d' % (self.kp_density, new_density))
-            print('KP Grid:    target: %s  new lattice: %s' % (self.kpoints.grid, tmpkp.grid))
+            print(('KP Density: target: %d  new lattice: %d' % (self.kp_density, new_density)))
+            print(('KP Grid:    target: %s  new lattice: %s' % (self.kpoints.grid, tmpkp.grid)))
 
             if np.prod(tmpkp.grid) > np.prod(self.kpoints.grid):
 

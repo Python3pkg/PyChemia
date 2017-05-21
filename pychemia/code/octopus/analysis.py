@@ -188,10 +188,10 @@ def value_in_sphere(dirname, keys, iteration=None, radius=4.5, spin=None):
         if os.path.isfile(filename):
             data = scipy.io.netcdf.netcdf_file(filename, mmap=False)
             if (not keys[0] in data.variables) or (not keys[1] in data.variables):
-                print('ERROR with ', keys)
+                print(('ERROR with ', keys))
             x = data.variables[keys[0]][:]
             if len(x) == 0:
-                print('ERROR File empty:', filename)
+                print(('ERROR File empty:', filename))
             index = (abs(x - radius)).argmin()
             # print 'dirname',dirname
             # print 'index=',index
@@ -208,13 +208,13 @@ def value_in_sphere(dirname, keys, iteration=None, radius=4.5, spin=None):
                 z = polyfit(x, y, 3)
                 p = poly1d(z)
             except ValueError:
-                print('Error fitting value for:', filename)
+                print(('Error fitting value for:', filename))
 
             # Get fit
             cis[i] = p(radius)
             data.close()
         else:
-            print('ERROR Missing file:', filename)
+            print(('ERROR Missing file:', filename))
 
     return iteration, cis
 

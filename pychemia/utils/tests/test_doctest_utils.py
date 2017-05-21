@@ -14,7 +14,7 @@ class MyTestCase(unittest.TestCase):
         """
         from pychemia.utils.periodic import atomic_number
         with self.assertRaises(Exception) as context:
-            atomic_number(['H', u'A'])
+            atomic_number(['H', 'A'])
         # self.assertTrue(u'Atomic symbol not found' == context.exception)
 
         from pychemia.utils.computing import read_file

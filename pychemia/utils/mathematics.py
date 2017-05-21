@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import itertools
 import math
 from fractions import gcd
@@ -194,7 +194,7 @@ def angle_vectors(m, units='rad'):
     """
 
     ret = {}
-    for i in itertools.combinations(range(len(m)), 2):
+    for i in itertools.combinations(list(range(len(m))), 2):
         ret[i] = angle_vector(m[i[0]], m[i[1]], units=units)
     return ret
 
@@ -245,7 +245,7 @@ def distances(m):
 
     """
     ret = {}
-    for i in itertools.combinations(range(len(m)), 2):
+    for i in itertools.combinations(list(range(len(m))), 2):
         ret[i] = distance(m[i[0]], m[i[1]])
     return ret
 
@@ -821,7 +821,7 @@ def iterative_rotation_angles(m, nrounds=1):
     inverse = np.eye(n)
 
     for j in range(nrounds):
-        for i in itertools.combinations(range(n), 2):
+        for i in itertools.combinations(list(range(n)), 2):
             # Compute the angle to align the plane i
             # into the canonical base
             num = ident[i[1], i[0]]  # Numerator

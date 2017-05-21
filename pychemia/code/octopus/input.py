@@ -38,7 +38,7 @@ def get_vars():
         elif line[0] == '[':
             section = line.strip()[1:-1]
         elif len(line.strip()) > 0:
-            if section not in oct_variables.keys():
+            if section not in list(oct_variables.keys()):
                 oct_variables[section] = [line]
             else:
                 oct_variables[section].append(line)
@@ -61,7 +61,7 @@ class OpenDX:
         self.nsize = _np.array([int(x) for x in data[0].split()[-3:]])
         self.origin = _np.array([float(x) for x in data[1].split()[-3:]])
         self.delta = _np.array([[float(x.split()[i]) for i in [1, 2, 3]] for x in data[2:5]])
-        self.field = _np.array(map(float, data[7:_np.prod(self.nsize) + 7]))
+        self.field = _np.array(list(map(float, data[7:_np.prod(self.nsize) + 7])))
         self.field = self.field.reshape(tuple(self.nsize))
         del data
 
@@ -120,7 +120,7 @@ class InputVariables:
                 key = line.strip()[1:]
                 multivalue = True
             else:
-                print('Line not parsed:', line)
+                print(('Line not parsed:', line))
 
         rfile.close()
 
@@ -143,7 +143,7 @@ class InputVariables:
         in a file
         """
         oct_vars = get_vars()
-        octvars = self.variables.keys()
+        octvars = list(self.variables.keys())
 
         oct_str = ""
         # Writing the known groups
@@ -170,7 +170,7 @@ class InputVariables:
 
             for j in octvars:
                 oct_def += _write_key(j, self.variables[j])
-                print(' * ', j)
+                print((' * ', j))
 
         return oct_def + oct_str
 

@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import numpy as np
 import pychemia
 import itertools
@@ -188,7 +188,7 @@ def get_onion_layers(structure):
     while morelayers:
         pos = cur_st.positions
         if len(pos) <= 4:
-            core = range(cur_st.natom)
+            core = list(range(cur_st.natom))
             layers.append(core)
             break
 
@@ -196,7 +196,7 @@ def get_onion_layers(structure):
         st.canonical_form()
         # print('The current volume is %7.3f' % st.volume)
         if st.volume < 0.1:
-            core = range(cur_st.natom)
+            core = list(range(cur_st.natom))
             layers.append(core)
             break
 
@@ -204,7 +204,7 @@ def get_onion_layers(structure):
             voro = scipy.spatial.Voronoi(pos)
             surface = [i for i in range(cur_st.natom) if -1 in voro.regions[voro.point_region[i]]]
         except qhull.QhullError:
-            surface = range(cur_st.natom)
+            surface = list(range(cur_st.natom))
             morelayers = False
         layers.append(surface)
         if not morelayers:

@@ -4,9 +4,7 @@ import subprocess
 from abc import ABCMeta, abstractmethod
 
 
-class Task:
-    __metaclass__ = ABCMeta
-
+class Task(metaclass=ABCMeta):
     def __init__(self, structure, task_params=None, workdir='.', binary=None):
         self.structure = structure
         self.workdir = workdir

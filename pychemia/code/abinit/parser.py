@@ -73,7 +73,7 @@ def __isnumber(word):
                     number = -_sqrt(float(word[6:-1]))
                     kind = 'float'
                 else:
-                    print('ERROR: "%s" is not a number\n' % word)
+                    print(('ERROR: "%s" is not a number\n' % word))
     return number, kind
 
 
@@ -222,27 +222,27 @@ def parser(filename):
             # indefined multiplicator such as '*1'
             if value.lower()[:6] == "angstr":
                 if len(varlist) == 0:
-                    print('ERROR: scaling factor', value, 'before a list of values')
+                    print(('ERROR: scaling factor', value, 'before a list of values'))
                 else:
                     varlist = [_pc.angstrom_bohr * x for x in varlist]
             elif value.lower() == "ev":
                 if len(varlist) == 0:
-                    print('ERROR: scaling factor', value, 'before a list of values')
+                    print(('ERROR: scaling factor', value, 'before a list of values'))
                 else:
                     varlist = [_pc.eV_Ha * x for x in varlist]
             elif value.lower() == "ry":
                 if len(varlist) == 0:
-                    print('ERROR: scaling factor', value, 'before a list of values')
+                    print(('ERROR: scaling factor', value, 'before a list of values'))
                 else:
                     varlist = [0.5 * x for x in varlist]
             elif value.lower() == "t" or value.lower() == "te":
                 if len(varlist) == 0:
-                    print('ERROR: scaling factor', value, 'before a list of values')
+                    print(('ERROR: scaling factor', value, 'before a list of values'))
                 else:
                     varlist = [_pc.BField_Tesla * x for x in varlist]
             elif value.lower() == "k":
                 if len(varlist) == 0:
-                    print('ERROR: scaling factor', value, 'before a list of values')
+                    print(('ERROR: scaling factor', value, 'before a list of values'))
                 else:
                     varlist = [_pc.kb_HaK * x for x in varlist]
             elif value.lower() == "ha" or value.lower() == "hartree":
@@ -257,7 +257,7 @@ def parser(filename):
             else:
                 # New keyword
                 if len(varlist) == 0:
-                    print('ERROR: new keyword "%s" with no elements for previos keyword "%s"' % (value, keyword))
+                    print(('ERROR: new keyword "%s" with no elements for previos keyword "%s"' % (value, keyword)))
                 else:
                     # Store the varlist in the dictionary
                     # for the previuos keyword
@@ -279,7 +279,7 @@ def parser(filename):
 
     # Final keyword
     if len(varlist) == 0:
-        print('ERROR: new keyword "%s" with no elements for previos keyword "%s" ' % (value, keyword))
+        print(('ERROR: new keyword "%s" with no elements for previos keyword "%s" ' % (value, keyword)))
     else:
         # Store the varlist in the dictionary
         # for the previuos keyword

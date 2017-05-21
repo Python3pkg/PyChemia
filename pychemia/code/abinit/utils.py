@@ -28,11 +28,11 @@ def netcdf2dict(filename):
             NetCDF filename
     """
     if not os.path.isfile(filename):
-        print('ERROR: No such file: ', filename)
+        print(('ERROR: No such file: ', filename))
         return None
     output = {}
     netcdffile = netcdf_file(filename, 'r', mmap=False)
-    for ii in netcdffile.variables.keys():
+    for ii in list(netcdffile.variables.keys()):
         output[ii] = netcdffile.variables[ii][:]
     netcdffile.close()
     return output
@@ -140,16 +140,16 @@ def abihelp(varname):
     variables = json.load(rf)
     rf.close()
 
-    if varname not in variables.keys():
-        print('ERROR: ' + varname + '  is not in the list of variables of ABINIT')
+    if varname not in list(variables.keys()):
+        print(('ERROR: ' + varname + '  is not in the list of variables of ABINIT'))
         return
     else:
         abivar = variables[varname]
         print(varname)
         print('')
-        print('DEFINITION:', abivar['definition'])
-        print('SECTION:   ', abivar['section'])
-        print('DEFAULT:   ', hp.feed(abivar['default']))
+        print(('DEFINITION:', abivar['definition']))
+        print(('SECTION:   ', abivar['section']))
+        print(('DEFAULT:   ', hp.feed(abivar['default'])))
         print('')
-        print(hp.feed(abivar['text']))
+        print((hp.feed(abivar['text'])))
         print('')

@@ -8,8 +8,8 @@ def test_composition():
     """
     pychemia.pcm_log.debug('Tests (pychemia.core.composition)')
     comp = pychemia.Composition('YBa2Cu3O7')
-    assert sorted(comp.species) == [u'Ba', u'Cu', u'O', u'Y']
-    assert (sorted(comp.symbols) == [u'Ba', u'Ba', u'Cu', u'Cu', u'Cu', u'O', u'O', u'O', u'O', u'O', u'O', u'O', u'Y'])
+    assert sorted(comp.species) == ['Ba', 'Cu', 'O', 'Y']
+    assert (sorted(comp.symbols) == ['Ba', 'Ba', 'Cu', 'Cu', 'Cu', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'Y'])
     assert (comp.formula == 'Ba2Cu3O7Y')
     assert (abs(comp.covalent_volume() - 285.185) < 1E-5)
     assert (comp.natom == 13)
@@ -17,7 +17,7 @@ def test_composition():
     assert (comp.sorted_formula(sortby='hill') == 'Ba2Cu3O7Y')
 
     comp = pychemia.Composition('Na2Cl2')
-    assert (comp.symbols == [u'Cl', u'Cl', u'Na', u'Na'])
+    assert (comp.symbols == ['Cl', 'Cl', 'Na', 'Na'])
     assert (pychemia.utils.periodic.valence(comp.symbols) == [7, 7, 1, 1])
 
 

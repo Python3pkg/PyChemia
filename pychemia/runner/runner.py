@@ -85,10 +85,10 @@ class Runner:
                     else:
                         if analyser is not None:
                             ret = analyser()
-                            print(os.path.basename(path), ret)
+                            print((os.path.basename(path), ret))
                         time.sleep(60)
 
-                print('The return code was', childp.returncode)
+                print(('The return code was', childp.returncode))
                 os.chdir(cwd)
                 errf.close()
                 outf.close()
@@ -135,8 +135,8 @@ class Runner:
                 if pt[i] is None or not pt[i].is_alive():
                     ret = checker(workdirs[index])
                     if ret:
-                        print('Launching for process ' + str(i) + ' on dir ' + os.path.basename(
-                            workdirs[index]) + ' index ' + str(index))
+                        print(('Launching for process ' + str(i) + ' on dir ' + os.path.basename(
+                            workdirs[index]) + ' index ' + str(index)))
                         pt[i] = Process(target=worker, args=(workdirs[index],))
                         pt[i].start()
                     index = (index + 1) % len(workdirs)

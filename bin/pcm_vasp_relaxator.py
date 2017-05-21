@@ -24,7 +24,7 @@ def cleaner():
 
 
 def usage(name):
-    print("""
+    print(("""
 NAME
     %s
 
@@ -53,7 +53,7 @@ OPTIONS
 
     --target_forces, -t <float> (Default: 1E-3)
         Target forces for internal relaxation
-""" % os.path.basename(name))
+""" % os.path.basename(name)))
 
 
 def main(argv):
@@ -99,7 +99,7 @@ def main(argv):
 
     structure = pychemia.structure_from_file(structure_file)
     if structure is None:
-        print(" ERROR: Invalid structure, no structure could be obtained from '%s'" % structure_file)
+        print((" ERROR: Invalid structure, no structure could be obtained from '%s'" % structure_file))
         sys.exit(2)
 
     if structure_file == 'POSCAR':
@@ -107,10 +107,10 @@ def main(argv):
 
     print("\n PyChemia VASP Relaxator")
     print(" =======================\n")
-    print(" VASP binary         : ", binary)
-    print(" Energy tolerance    : ", energy_tol)
-    print(" Target forces       : ", target_forces)
-    print(" MPI number of procs : ", nparal)
+    print((" VASP binary         : ", binary))
+    print((" Energy tolerance    : ", energy_tol))
+    print((" Target forces       : ", target_forces))
+    print((" MPI number of procs : ", nparal))
     print(" Structure           :\n")
     print(structure)
 

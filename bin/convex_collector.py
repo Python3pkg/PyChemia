@@ -77,10 +77,10 @@ if __name__ == '__main__':
                 ratio = 0.0
             else:
                 ratio = float(st.composition[specie_right]) / st.natom
-                print("ratio: %f - right=%d natom=%d %s" % (ratio,
+                print(("ratio: %f - right=%d natom=%d %s" % (ratio,
                                                             float(st.composition[specie_right]),
                                                             st.natom,
-                                                            st.formula))
+                                                            st.formula)))
 
             if 'energy_pa' in entry['properties']:
 
@@ -93,7 +93,7 @@ if __name__ == '__main__':
                             'natom': st.natom,
                             'density': st.density})
             else:
-                print('ERROR: DB=%s ENTRY=%s No value of energy' % (idb, entry_id))
+                print(('ERROR: DB=%s ENTRY=%s No value of energy' % (idb, entry_id)))
 
     sorter = []
     for i in ret:

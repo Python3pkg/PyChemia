@@ -143,7 +143,7 @@ def oct_merge(res1, res2, basedir, mksym1, mksym2):
 
     # Copy or make symlinks of the States (*.obf) from first directory
     for i in res1.states_obf.obfs:
-        print('FIRST: Copying or Linking ', i)
+        print(('FIRST: Copying or Linking ', i))
         if mksym1:
             _os.symlink(_os.getcwd() + '/' + res1.states_obf.basedir + '/restart/gs/' + i, basedir + '/restart/gs/' + i)
         else:
@@ -151,7 +151,7 @@ def oct_merge(res1, res2, basedir, mksym1, mksym2):
 
     # Copy or make symlinks of the States (*.obf) from second directory
     for i in res2.states_obf.obfs:
-        print('SECOND: Copying or Linking ', i)
+        print(('SECOND: Copying or Linking ', i))
         if mksym2:
             _os.symlink(_os.getcwd() + '/' + res2.states_obf.basedir + '/restart/gs/' + i,
                         basedir + '/restart/gs/' + str(lastfilename + 1).zfill(10) + '.obf')

@@ -26,7 +26,7 @@ class SplitMatch:
                 self.split_sites[i] = get_simple_split_sites(self.structures[i], self.cut_planes[i])
                 if len(self.split_sites[i]) == 0:
                     delta_distance *= 0.9
-                    print('delta distance reduced to', delta_distance)
+                    print(('delta distance reduced to', delta_distance))
             if len(self.split_sites[0]) > 0 and len(self.split_sites[1]) > 0:
                 # Select two compatible splits (that preserve the number of atoms)
                 has_groups = False
@@ -37,10 +37,10 @@ class SplitMatch:
                 trial = 0
                 while not has_groups:
                     rnd = np.random.randint(len(self.split_sites[0]))
-                    grp0 = self.split_sites[0].keys()[rnd]
+                    grp0 = list(self.split_sites[0].keys())[rnd]
                     for grp1 in self.split_sites[1]:
                         trial += 1
-                        print('Selected Groups:', grp0, grp1)
+                        print(('Selected Groups:', grp0, grp1))
                         if len(self.split_sites[0][grp0]) == len(self.split_sites[1][grp1]):
                             has_groups = True
                             break
@@ -74,14 +74,14 @@ class SplitMatch:
         cut_value1 = self.cut_planes[0][idim1][cp1]
         cut_value2 = self.cut_planes[1][idim2][cp2]
 
-        print('idim1:', idim1, 'cut_value1:', cut_value1)
-        print('idim2:', idim2, 'cut_value2:', cut_value2)
+        print(('idim1:', idim1, 'cut_value1:', cut_value1))
+        print(('idim2:', idim2, 'cut_value2:', cut_value2))
 
         # Select one possible permutation that will make the second
         # structure being cutted along the same dimension as the first one
         permsel1 = None
         permsel2 = None
-        for i in itertools.permutations(range(3), 3):
+        for i in itertools.permutations(list(range(3)), 3):
             if i[idim1] == idim2:
                 permsel1 = i
             if i[idim2] == idim1:
@@ -89,8 +89,8 @@ class SplitMatch:
             if permsel1 is not None and permsel2 is not None:
                 break
 
-        print('Permutation Selected 1:', permsel1)
-        print('Permutation Selected 2:', permsel2)
+        print(('Permutation Selected 1:', permsel1))
+        print(('Permutation Selected 2:', permsel2))
 
         newreduced1 = np.zeros((self.structures[0].natom, 3))
         newreduced2 = np.zeros((self.structures[1].natom, 3))
@@ -168,7 +168,7 @@ def get_cut_planes(structure, delta_distance=0.1):
         v = np.concatenate((v, [1 + v[0]]))
         # Compute the vector of differences df[i]=v[i+1]-v[i]
         df = np.diff(v)
-        for i in (range(structure.nsites)):
+        for i in (list(range(structure.nsites))):
             if df[i] > delta_distance:
                 ret[idim].append((v[i] + 0.5 * df[i]) % 1.0)
         ret[idim].sort()
@@ -185,7 +185,7 @@ def get_simple_split_sites(structure, cut_planes):
                     ret[(idim, iplane)].append(i)
 
     # Removing trivial partitions of the entire structure
-    for i in ret.keys():
+    for i in list(ret.keys()):
         if len(ret[i]) == structure.nsites:
             ret.pop(i)
     return ret
@@ -231,7 +231,7 @@ def get_all_splitted_compositions(structure, cut_planes):
     for idim in range(3):
         nplanes = len(cut_planes[idim])
         if nplanes > 1:
-            for j in itertools.combinations(range(nplanes), 2):
+            for j in itertools.combinations(list(range(nplanes)), 2):
                 split_sites, factors = get_split_sites(structure, idim, cut_planes, j)
                 npsymbols = np.array(structure.symbols)
                 for k in range(2):

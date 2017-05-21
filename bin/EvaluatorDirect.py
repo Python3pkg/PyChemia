@@ -50,13 +50,13 @@ def worker_maise(db_settings, entry_id, workdir, relaxator_params):
 
     if 'ncalls' in status and status['ncalls'] > 0:
         ncalls = status['ncalls'] + 1
-        print('ncalls = ', status['ncalls'])
+        print(('ncalls = ', status['ncalls']))
     else:
         ncalls = 1
     print('Verifing initial structure...')
     while np.min(structure.distance_matrix()+(np.eye(structure.natom)*5)) < 1.9:
-        print('ERROR: Bad initial guess, two atoms are to close. Creating new random structure for id: %s' %
-              str(entry_id))
+        print(('ERROR: Bad initial guess, two atoms are to close. Creating new random structure for id: %s' %
+              str(entry_id)))
         write_poscar(structure, workdir + os.sep + 'Fail_initial_POSCAR')  # WIH
         structure = Structure.random_cell(structure.composition)
 
@@ -64,7 +64,7 @@ def worker_maise(db_settings, entry_id, workdir, relaxator_params):
     if not os.path.exists(workdir + os.sep + 'setup') and ncalls == 1:     # WIH
         print('First run.')  # WIH
         #   print('Verifying that everything runs smoothly') # WIH
-        print(workdir + os.sep + 'setup')
+        print((workdir + os.sep + 'setup'))
         shutil.copy2(source_dir + os.sep + 'setup_1', workdir + os.sep + 'setup')   # WIH
     elif ncalls > 1:  # WIH
         shutil.copy2(source_dir + os.sep + 'setup_2', workdir + os.sep + 'setup')   # WIH
@@ -103,8 +103,8 @@ def worker_maise(db_settings, entry_id, workdir, relaxator_params):
             forces = pos_forces[:, :, 3:6]
             # positions = pos_forces[:, :, :3]
         else:
-            print('Forces and Positions could not be parsed : ', pos_forces.shape)
-            print('pos_forces =\n%s ' % pos_forces)
+            print(('Forces and Positions could not be parsed : ', pos_forces.shape))
+            print(('pos_forces =\n%s ' % pos_forces))
 
         str_stress = re.findall('Total([.\d\s-]*)in', data)
         if len(str_stress) == 2:
@@ -116,7 +116,7 @@ def worker_maise(db_settings, entry_id, workdir, relaxator_params):
     create_new = False
     if not os.path.isfile('CONTCAR') or os.path.getsize("CONTCAR") == 0:
         create_new = True
-        print('CONTCAR not found in entry: %s' % str(entry_id))
+        print(('CONTCAR not found in entry: %s' % str(entry_id)))
         i = 1
         while True:
             if not os.path.isfile('POSCAR-failed-%03s' % str(i)):
@@ -128,10 +128,10 @@ def worker_maise(db_settings, entry_id, workdir, relaxator_params):
         new_structure = read_poscar('CONTCAR')
         # min_dist = np.min(new_structure.distance_matrix+np.ones((new_structure.natom,new_structure.natom)))
     min_dist = np.min(new_structure.distance_matrix()+(np.eye(new_structure.natom)*5))   # WIH
-    print('Minimal distance= %8.7f' % min_dist)   # WIH
+    print(('Minimal distance= %8.7f' % min_dist))   # WIH
 
     if min_dist < 2.0:
-        print('ERROR: MAISE finished with and structure with distances too close:', entry_id)  # WIH
+        print(('ERROR: MAISE finished with and structure with distances too close:', entry_id))  # WIH
         write_poscar(new_structure, workdir + os.sep + 'Collapsed_CONTCAR')  # WIH
         create_new = True   # WIH
 
@@ -140,7 +140,7 @@ def worker_maise(db_settings, entry_id, workdir, relaxator_params):
         ncalls = 0    # WIH
 
     if ncalls > max_ncalls:
-        print('WARNING: Too many calls to MAISE and no relaxation succeeded, replacing structure: ', entry_id)    # WIH
+        print(('WARNING: Too many calls to MAISE and no relaxation succeeded, replacing structure: ', entry_id))    # WIH
         new_structure = Structure.random_cell(structure.composition)
         pcdb.entries.update({'_id': entry_id}, {'$set': {'status.ncalls': 0}})
         create_new = True
@@ -193,11 +193,11 @@ def worker_vasp(db_settings, entry_id, workdir, relaxator_params):
         pcdb.lock(entry_id)
     structure = pcdb.get_structure(entry_id)
     structure = structure.scale()
-    print('relaxator_params', relaxator_params)
+    print(('relaxator_params', relaxator_params))
     relaxer = IonRelaxation(structure, workdir=workdir, target_forces=target_forces, waiting=False,
                             binary=relaxator_params['binary'], encut=1.3, kp_grid=None, kp_density=1E4,
                             relax_cell=True, max_calls=10)
-    print('relaxing on:', relaxer.workdir)
+    print(('relaxing on:', relaxer.workdir))
     relaxer.run(relaxator_params['nmpiparal'])
     pcm_log.info('[%s]: Finished relaxation. Target forces: %7.3e' % (str(entry_id), target_forces))
 
@@ -208,8 +208,8 @@ def worker_vasp(db_settings, entry_id, workdir, relaxator_params):
 
         if forces is not None:
             magnitude_forces = np.apply_along_axis(np.linalg.norm, 1, forces)
-            print('Forces: Max: %9.3e Avg: %9.3e' % (np.max(magnitude_forces), np.average(magnitude_forces)))
-            print('Stress: ', np.max(np.abs(stress.flatten())))
+            print(('Forces: Max: %9.3e Avg: %9.3e' % (np.max(magnitude_forces), np.average(magnitude_forces))))
+            print(('Stress: ', np.max(np.abs(stress.flatten()))))
 
         if forces is None:
             pcm_log.error('No forces found on %s' % filename)
@@ -307,8 +307,8 @@ def worker_dftb(db_settings, entry_id, workdir, target_forces, relaxator_params)
 
         if forces is not None:
             magnitude_forces = np.apply_along_axis(np.linalg.norm, 1, forces)
-            print('Forces: Max: %9.3e Avg: %9.3e' % (np.max(magnitude_forces), np.average(magnitude_forces)))
-            print('Stress: ', np.max(np.abs(stress.flatten())))
+            print(('Forces: Max: %9.3e Avg: %9.3e' % (np.max(magnitude_forces), np.average(magnitude_forces))))
+            print(('Stress: ', np.max(np.abs(stress.flatten()))))
 
         if forces is None:
             pcm_log.error('No forces found on %s' % filename)
@@ -381,11 +381,11 @@ def worker(db_settings, entry_id, workdir, target_forces, relaxator_params):
         pcdb.lock(entry_id)
     structure = pcdb.get_structure(entry_id)
     structure = structure.scale()
-    print('relaxator_params', relaxator_params)
+    print(('relaxator_params', relaxator_params))
     relaxer = IonRelaxation2(structure, workdir=workdir, target_forces=target_forces, waiting=False,
                              binary=relaxator_params['binary'], encut=1.3, kp_grid=None, kp_density=1E4,
                              relax_cell=True)
-    print('relaxing on:', relaxer.workdir)
+    print(('relaxing on:', relaxer.workdir))
     relaxer.run(relaxator_params['nmpiparal'])
     pcm_log.info('[%s]: Finished relaxation. Target forces: %7.3e' % (str(entry_id), target_forces))
 
@@ -396,8 +396,8 @@ def worker(db_settings, entry_id, workdir, target_forces, relaxator_params):
 
         if forces is not None:
             magnitude_forces = np.apply_along_axis(np.linalg.norm, 1, forces)
-            print('Forces: Max: %9.3e Avg: %9.3e' % (np.max(magnitude_forces), np.average(magnitude_forces)))
-            print('Stress: ', np.max(np.abs(stress.flatten())))
+            print(('Forces: Max: %9.3e Avg: %9.3e' % (np.max(magnitude_forces), np.average(magnitude_forces))))
+            print(('Stress: ', np.max(np.abs(stress.flatten()))))
 
         if forces is None:
             pcm_log.error('No forces found on %s' % filename)
@@ -483,14 +483,14 @@ def get_current_status(pcdb, entry_id, relaxator_params, verbose=False):
         print(entry)
     if max(max_force, max_diag_stress, max_nondiag_stress) > relaxator_params['target_forces'] and verbose:
         if (max_force * max_diag_stress * max_nondiag_stress) == 1.0:
-            print('No forces/stress information for entry: %s' % entry['_id'])
+            print(('No forces/stress information for entry: %s' % entry['_id']))
         else:
-            print('Convergence status for entry: %s' % entry['_id'])
-            print('Max Interatomic Force: %9.2E [eV/Ang]' % max_force)
-            print('Max Diag stress      : %9.2E with pressure: %9.2E [eV/Ang^3]' % (max_diag_stress,
+            print(('Convergence status for entry: %s' % entry['_id']))
+            print(('Max Interatomic Force: %9.2E [eV/Ang]' % max_force))
+            print(('Max Diag stress      : %9.2E with pressure: %9.2E [eV/Ang^3]' % (max_diag_stress,
                                                                                     relaxator_params['pressure'] /
-                                                                                    1602.1766208))
-            print('Max NonDiag stress   : %9.2E [eV/Ang^3]' % max_nondiag_stress)
+                                                                                    1602.1766208)))
+            print(('Max NonDiag stress   : %9.2E [eV/Ang^3]' % max_nondiag_stress))
     return max(max_force, max_diag_stress, max_nondiag_stress)
 
 
@@ -570,21 +570,21 @@ if __name__ == '__main__':
                         'source_dir': args.source_dir}
 
     print('pyChemia Evaluator using VASP')
-    print('dbname    : %s' % args.dbname)
-    print('source_dir: %s' % args.source_dir)
-    print('host      : %s' % args.host)
-    print('port      : %d' % args.port)
-    print('user      : %s' % args.user)
-    print('replicaset: %s' % args.replicaset)
-    print('nparal    : %d' % args.nparal)
-    print('nmpiparal : %d' % args.nmpiparal)
-    print('binary    : %s' % str(args.binary))
-    print('target-forces : %.2E' % args.target_forces)
-    print('pressure_kB   : %.2E' % args.pressure_kB)
-    print('evaluate_all  : %s' % str(args.evaluate_all))
-    print('waiting       : %s' % str(args.waiting))
-    print('ssl           : %s' % str(args.ssl))
-    print('slater-path   : %s' % str(args.slater_path))
+    print(('dbname    : %s' % args.dbname))
+    print(('source_dir: %s' % args.source_dir))
+    print(('host      : %s' % args.host))
+    print(('port      : %d' % args.port))
+    print(('user      : %s' % args.user))
+    print(('replicaset: %s' % args.replicaset))
+    print(('nparal    : %d' % args.nparal))
+    print(('nmpiparal : %d' % args.nmpiparal))
+    print(('binary    : %s' % str(args.binary)))
+    print(('target-forces : %.2E' % args.target_forces))
+    print(('pressure_kB   : %.2E' % args.pressure_kB))
+    print(('evaluate_all  : %s' % str(args.evaluate_all)))
+    print(('waiting       : %s' % str(args.waiting)))
+    print(('ssl           : %s' % str(args.ssl)))
+    print(('slater-path   : %s' % str(args.slater_path)))
 
     print(db_settings)
     print(relaxator_params)

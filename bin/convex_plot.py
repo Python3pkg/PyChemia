@@ -66,7 +66,7 @@ def formation_energy(energy, x, energy_left, energy_right):
 def create_convex(bottom, top, energy_left, energy_right, input, output):
 
     if not os.path.isfile(input):
-        print('File not found %s' % input)
+        print(('File not found %s' % input))
 
     data = json.load(open(input))
     plt.figure(figsize=(11, 8.5))
@@ -75,12 +75,12 @@ def create_convex(bottom, top, energy_left, energy_right, input, output):
         if idata['ratio'] == 0:
             if energy_left is None or energy_left > idata['energy_pa']:
                 energy_left = idata['energy_pa']
-                print('Energy per atom for %2s: %9.3f' % (idata['formula'], energy_left))
+                print(('Energy per atom for %2s: %9.3f' % (idata['formula'], energy_left)))
 
         elif idata['ratio'] == 1:
             if energy_right is None or energy_right > idata['energy_pa']:
                 energy_right = idata['energy_pa']
-                print('Energy per atom for %2s: %9.3f' % (idata['formula'], energy_right))
+                print(('Energy per atom for %2s: %9.3f' % (idata['formula'], energy_right)))
 
     if energy_left is None or energy_right is None:
         print('Pure elements not found, formation energy cannot be computed')
@@ -115,11 +115,11 @@ def create_convex(bottom, top, energy_left, energy_right, input, output):
 
     for spcgrp in [15, 74, 142, 167, 194, 230]:
         marker, color, lab, m, z, fs = spcgrp_props(spcgrp)
-        print('Marker for %12s: %s' % (lab, marker))
+        print(('Marker for %12s: %s' % (lab, marker)))
         plt.plot(-100, -100, marker, ms=m, fillstyle=fs, color=color, label=lab)
 
     plt.xlim(-0.05, 1.05)
-    print('Limits', bottom, top)
+    print(('Limits', bottom, top))
     plt.ylim(bottom, top)
     plt.legend(loc=9, prop={'size': 10}, numpoints=1)
     plt.subplots_adjust(left=0.12, bottom=0.13, right=0.98, top=0.96, wspace=None, hspace=None)

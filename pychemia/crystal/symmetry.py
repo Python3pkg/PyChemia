@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 import spglib as spg
 from pychemia.utils.serializer import generic_serializer
 from pychemia.utils.computing import deep_unicode
@@ -15,7 +15,7 @@ def spglib_version():
     if type(ret[3]) is list:
         HAS_SPGLIB = False
         version = "%d.%d.%d" % spg.get_version()
-        print('SPGLIB current version is %s, please install spglib > 1.9' % version)
+        print(('SPGLIB current version is %s, please install spglib > 1.9' % version))
     else:
         HAS_SPGLIB = True
     return HAS_SPGLIB
@@ -152,19 +152,19 @@ class CrystalSymmetry(object):
         num = self.number(symprec)
 
         if num < 3:
-            return u'Triclinic'
+            return 'Triclinic'
         elif num < 16:
-            return u'Monoclinic'
+            return 'Monoclinic'
         elif num < 75:
-            return u'Orthorhombic'
+            return 'Orthorhombic'
         elif num < 143:
-            return u'Tetragonal'
+            return 'Tetragonal'
         elif num < 168:
-            return u'Trigonal'
+            return 'Trigonal'
         elif num < 195:
-            return u'Hexagonal'
+            return 'Hexagonal'
         else:
-            return u'Cubic'
+            return 'Cubic'
 
     def symmetrize(self, initial_symprec=0.01, final_symprec=0.1, delta_symprec=0.01):
         if self.structure.natom == 1:

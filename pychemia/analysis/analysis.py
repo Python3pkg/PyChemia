@@ -76,7 +76,7 @@ class StructureAnalysis:
                 pairs_dict = {}
                 distances_list = []
                 index = 0
-                for i, j in itertools.combinations(range(self.structure.natom), 2):
+                for i, j in itertools.combinations(list(range(self.structure.natom)), 2):
                     if index % 100 == 0:
                         pcm_log.debug('Computing distance between atoms %d and %d' % (i, j))
                     ret = self.structure.lattice.distance2(self.structure.reduced[i], self.structure.reduced[j],
@@ -125,7 +125,7 @@ class StructureAnalysis:
             ret = {}
             if not self.structure.is_periodic:
                 dist_matrix = self.structure.distance_matrix()
-            for i, j in itertools.combinations_with_replacement(range(self.structure.natom), 2):
+            for i, j in itertools.combinations_with_replacement(list(range(self.structure.natom)), 2):
                 pair = (i, j)
                 if self.structure.is_periodic:
                     ret[pair] = self.structure.lattice.distances_in_sphere(self.structure.reduced[i],
@@ -264,7 +264,7 @@ class StructureAnalysis:
             print('Computing all distances...')
         bonds_dict, distances_list = self.close_distances()
         if verbose:
-            print('Number of distances computed: ', len(distances_list))
+            print(('Number of distances computed: ', len(distances_list)))
 
         cutoff_radius = initial_cutoff_radius
         bonds = None
@@ -273,7 +273,7 @@ class StructureAnalysis:
 
         while True:
             if verbose:
-                print('Current cutoff radius : ', cutoff_radius)
+                print(('Current cutoff radius : ', cutoff_radius))
             bonds = []
             tolerances = []
             for i in range(self.structure.natom):
@@ -320,7 +320,7 @@ class StructureAnalysis:
                     cutoff_radius += jump
                     if verbose:
                         print('The laplacian is all zero')
-                        print('Increasing cutoff radius by ', jump, 'A\n')
+                        print(('Increasing cutoff radius by ', jump, 'A\n'))
                     continue
 
                 # if verbose:
@@ -328,14 +328,14 @@ class StructureAnalysis:
                 # evals, evecs = scipy.sparse.linalg.eigsh(laplacian)
                 ev = numpy.linalg.eigvalsh(laplacian)
                 if verbose:
-                    print('Number of Eigenvalues close to zero :', sum(ev < tol))
-                    print('Lowest Eigenvalues :', ev)
+                    print(('Number of Eigenvalues close to zero :', sum(ev < tol)))
+                    print(('Lowest Eigenvalues :', ev))
                     # print 'Lowest Eigenvalues :', evals
 
                 if sum(ev < tol) > 1 and use_jump:
                     cutoff_radius += jump
                     if verbose:
-                        print('Increasing cutoff radius by ', jump, 'A\n')
+                        print(('Increasing cutoff radius by ', jump, 'A\n'))
                 else:
                     increase = False
                     for i in bonds:
@@ -344,7 +344,7 @@ class StructureAnalysis:
                     if increase:
                         cutoff_radius += jump
                         if verbose:
-                            print('Increasing cutoff radius by', jump, 'A\n')
+                            print(('Increasing cutoff radius by', jump, 'A\n'))
                     else:
                         break
             else:
@@ -432,7 +432,7 @@ class StructureAnalysis:
                                         use_laplacian=use_laplacian, verbose=verbose, use_jump=use_jump, tol=tol)
 
         if verbose:
-            print('Structure coordination : ', coordination)
+            print(('Structure coordination : ', coordination))
 
         sigma = 3.0
         c_hard = 1300.0
@@ -443,7 +443,7 @@ class StructureAnalysis:
         atomicnumbers = atomic_number(self.structure.species)
 
         if verbose:
-            print('Atomic numbers in the structure :', atomicnumbers)
+            print(('Atomic numbers in the structure :', atomicnumbers))
 
         for i in atomicnumbers:
             f_d += valence(i) / covalent_radius(i)
@@ -460,7 +460,7 @@ class StructureAnalysis:
         # Selection of different bonds
         diff_bonds = np.unique(np.array(functools.reduce(lambda xx, y: xx + y, bonds)))
         if verbose:
-            print('Number of different bonds : ', len(diff_bonds))
+            print(('Number of different bonds : ', len(diff_bonds)))
 
         for i in diff_bonds:
             i1 = all_distances[i]['pair'][0]
@@ -481,7 +481,7 @@ class StructureAnalysis:
 
         vol = self.structure.volume
         if verbose:
-            print("Structure volume:", vol)
+            print(("Structure volume:", vol))
             # print("f:", f)
             # print("x:", x)
 
@@ -508,8 +508,8 @@ class StructureAnalysis:
         dis_dic = None
 
         if verbose:
-            print('Testing with %s of atoms in cell' % n)
-            print('Starting with R_cut = %s' % radius)
+            print(('Testing with %s of atoms in cell' % n))
+            print(('Starting with R_cut = %s' % radius))
 
         while True:
             size = (n, n)
@@ -523,7 +523,7 @@ class StructureAnalysis:
                     dis = self.structure.get_distance(i, j, with_periodicity=True)
                     if dis < radius:
                         if len(dis_dic) != 0:
-                            for kstr, kj in dis_dic.items():
+                            for kstr, kj in list(dis_dic.items()):
                                 tstr = "%s%s" % (self.structure.symbols[i],
                                                  self.structure.symbols[j])
                                 if abs(kj[0] - dis) < tolerance and tstr in kstr:
@@ -564,10 +564,10 @@ class StructureAnalysis:
                 break
 
         if verbose:
-            print('New cut off = %s' % radius)
+            print(('New cut off = %s' % radius))
             print('Bonds:')
-            for i, j in dis_dic.items():
-                print("  %s %s" % (i, j))
+            for i, j in list(dis_dic.items()):
+                print(("  %s %s" % (i, j)))
 
         return radius, coordination, dis_dic
 
@@ -594,9 +594,9 @@ class StructureAnalysis:
 
         max_covalent_radius = max(covalent_radius(superc.symbols))
         if verbose:
-            print('Number of atoms', natom)
-            print('Volume         ', volume)
-            print('Covalent rad max', max_covalent_radius)
+            print(('Number of atoms', natom))
+            print(('Volume         ', volume))
+            print(('Covalent rad max', max_covalent_radius))
         rcut, coord, dis_dic = structure_analisys.get_bonds(2.0 * max_covalent_radius, noupdate, verbose, tolerance)
 
         sigma = 3.0
@@ -609,7 +609,7 @@ class StructureAnalysis:
         for i in superc.symbols:
             dic_atms[i] = atomic_number(i)
 
-        for i in dic_atms.keys():
+        for i in list(dic_atms.keys()):
             f_d += valence(i) / covalent_radius(i)
             f_n *= valence(i) / covalent_radius(i)
         f = 1.0 - (len(dic_atms) * f_n ** (1.0 / len(dic_atms)) / f_d) ** 2
@@ -620,7 +620,7 @@ class StructureAnalysis:
             print('COORDINATION')
             print(coord)
 
-        for i in dis_dic.keys():
+        for i in list(dis_dic.keys()):
             i1 = dis_dic[i][2][0]
             i2 = dis_dic[i][2][1]
 
@@ -633,9 +633,9 @@ class StructureAnalysis:
             x *= sij * dis_dic[i][1]
 
         if verbose:
-            print("V:", volume)
-            print("f:", f)
-            print("x:", x)
+            print(("V:", volume))
+            print(("f:", f))
+            print(("x:", x))
 
         hardness_value = c_hard / volume * (len(dis_dic) * x ** (1. / (len(dis_dic)))) * math.exp(-sigma * f)
 

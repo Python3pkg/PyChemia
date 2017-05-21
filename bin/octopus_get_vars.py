@@ -14,10 +14,10 @@ for i in range(len(data)):
                 Section = data[i + j][8:].split('::')[0].strip()
                 break
         if Section == '':
-            print('Error finding section for ', Variable)
+            print(('Error finding section for ', Variable))
 
-        if Section not in Sections.keys():
-            print('New Section ', Section)
+        if Section not in list(Sections.keys()):
+            print(('New Section ', Section))
             Sections[Section] = [Variable]
         else:
             Sections[Section].append(Variable)

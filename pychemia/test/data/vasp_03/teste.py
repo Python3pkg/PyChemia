@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from __future__ import print_function
+
 import math
 import vtk
 
@@ -169,14 +169,14 @@ def ReverseLUT(lut):
     lutr = vtk.vtkLookupTable()
     lutr.DeepCopy(lut)
     t = lut.GetNumberOfTableValues() - 1
-    for i in reversed(range(t + 1)):
+    for i in reversed(list(range(t + 1))):
         rgba = [0, 0, 0]
         v = float(i)
         lut.GetColor(v, rgba)
         rgba.append(lut.GetOpacity(v))
         lutr.SetTableValue(t - i, rgba)
     t = lut.GetNumberOfAnnotatedValues() - 1
-    for i in reversed(range(t + 1)):
+    for i in reversed(list(range(t + 1))):
         lutr.SetAnnotation(t - i, lut.GetAnnotation(i))
     return lutr
 

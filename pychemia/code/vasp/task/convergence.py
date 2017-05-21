@@ -132,7 +132,7 @@ class ConvergenceCutOffEnergy(Task, Convergence):
             vj.input_variables.variables['ISPIN'] = 2
             vj.set_inputs()
             encut = vj.input_variables.variables['ENCUT']
-            print('Testing ENCUT = %7.3f' % encut)
+            print(('Testing ENCUT = %7.3f' % encut))
             vj.run(use_mpi=True, mpi_num_procs=nparal)
             pcm_log.debug('Starting VASP')
             while True:
@@ -163,7 +163,7 @@ class ConvergenceCutOffEnergy(Task, Convergence):
                 time.sleep(5)
             vj.get_outputs()
             free_energy = vj.outcar.final_data['energy']['free_energy']
-            print('encut= %7.3f  free_energy: %9.6f' % (encut, free_energy))
+            print(('encut= %7.3f  free_energy: %9.6f' % (encut, free_energy)))
             self.convergence_info.append({'free_energy': free_energy, 'encut': encut, 'factor': x})
             energies.append(free_energy)
             if len(energies) > 2 and abs(max(energies[-3:]) - min(energies[-3:])) < self.energy_tolerance:
@@ -296,7 +296,7 @@ class ConvergenceKPointGrid(Task, Convergence):
                 vj.get_outputs()
                 energy = vj.outcar.final_data['energy']['free_energy']
                 energies.append(energy)
-                print('kp_density= %10d kp_grid= %15s free_energy= %9.6f' % (density, grid, energy))
+                print(('kp_density= %10d kp_grid= %15s free_energy= %9.6f' % (density, grid, energy)))
                 self.convergence_info.append({'free_energy': vj.outcar.final_data['energy']['free_energy'],
                                               'kp_grid': list(grid),
                                               'kp_density': density,

@@ -128,7 +128,7 @@ class InputVariables(collections.MutableMapping):
         String representation of the object
         """
         ret = ''
-        thekeys = self.variables.keys()
+        thekeys = list(self.variables.keys())
         varnames = [x for x in thekeys if not x[-1].isdigit()]
 
         if 'ndtset' in varnames:
@@ -183,7 +183,7 @@ class InputVariables(collections.MutableMapping):
 
         ret = ''
         if varname not in self.variables:
-            print("[ERROR] input variable: '%s' is not defined" % varname)
+            print(("[ERROR] input variable: '%s' is not defined" % varname))
             return
 
         # Assume that the variables are integer and test if such assumption
@@ -456,7 +456,7 @@ class InputVariables(collections.MutableMapping):
                         for j in range(1, udtset[1] + 1):
                             ret.append(str(i) + str(j))
                 else:
-                    ret = range(1, ndtset + 1)
+                    ret = list(range(1, ndtset + 1))
         else:
             ret = ['']
 
@@ -548,8 +548,8 @@ def merge(abi_into, abi_from, filename=None):
     abinit_into = InputVariables(abi_into)
     abinit_from = InputVariables(abi_from)
 
-    for i in abinit_into.variables.keys():
-        if i in abinit_from.variables.keys():
+    for i in list(abinit_into.variables.keys()):
+        if i in list(abinit_from.variables.keys()):
             abinit_into.variables[i] = abinit_from.variables[i]
 
     if filename is None:

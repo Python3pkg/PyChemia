@@ -39,7 +39,7 @@ def _compute_box(b):
 
 def _read_netcdf(filename):
     if not os.path.isfile(filename):
-        print('ERROR: Non existing file: ' + filename)
+        print(('ERROR: Non existing file: ' + filename))
         exit(1)
     data = scipy.io.netcdf_file(filename)
     rdata = data.variables['rdata'][:]
@@ -95,7 +95,7 @@ def oct_visualize(path='static',
             pos = p
 
         if spin[0] is True and spin[1] is True and not np.all(pos[0] == pos[1]):
-            print('ERROR box not consistent on', path)
+            print(('ERROR box not consistent on', path))
             exit()
 
     if visual is None:

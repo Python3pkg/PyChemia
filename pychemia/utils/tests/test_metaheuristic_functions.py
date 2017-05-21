@@ -14,6 +14,6 @@ class MetaheuristicFunctionTest(unittest.TestCase):
             func = eval('pychemia.utils.metaheuristics.'+i+'()')
 
             print(i)
-            print(func.mindim)
-            print(func.minimum(func.mindim))
-            print(func.fminimum(func.mindim))
+            print((func.mindim))
+            print((func.minimum(func.mindim)))
+            print((func.fminimum(func.mindim)))

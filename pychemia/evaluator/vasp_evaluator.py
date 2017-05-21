@@ -102,12 +102,12 @@ class RelaxPopulation:
                 vo = VaspOutput(workdir + os.sep + 'OUTCAR')
                 relaxation_info = vo.relaxation_info()
                 if len(relaxation_info) != 3:
-                    print('[' + str(entry_id) + ']' + ' Missing some data in OUTCAR (forces or stress)')
+                    print(('[' + str(entry_id) + ']' + ' Missing some data in OUTCAR (forces or stress)'))
                     self.add_status(entry_id, 'NOOUTCAR')
 
-                print('[' + str(entry_id) + ']' + 'Results:')
+                print(('[' + str(entry_id) + ']' + 'Results:'))
                 for i in relaxation_info:
-                    print('[' + str(entry_id) + '] %20s %12.5e' % (i, relaxation_info[i]))
+                    print(('[' + str(entry_id) + '] %20s %12.5e' % (i, relaxation_info[i])))
 
                 # Conditions to consider the structure relaxed
                 if relaxation_info['avg_force'] < self.target_force:
@@ -158,9 +158,9 @@ class RelaxPopulation:
                 vj.input_variables.variables['EDIFFG'] = - self.target_force
 
             # Print new values
-            print('[' + str(entry_id) + ']' + 'New Values:')
+            print(('[' + str(entry_id) + ']' + 'New Values:'))
             for i in ['ISIF', 'IBRION', 'EDIFF', 'EDIFFG']:
-                print('[' + str(entry_id) + ']' + i + ' : ', vj.input_variables.variables[i])
+                print(('[' + str(entry_id) + ']' + i + ' : ', vj.input_variables.variables[i]))
             print('-')
 
             for i in ['OUTCAR']:

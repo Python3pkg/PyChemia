@@ -40,16 +40,16 @@ if __name__ == '__main__':
             elif option == 'del':
                 todel.append(sys.argv[i + 1])
             else:
-                print('Unknown option. --' + option)
+                print(('Unknown option. --' + option))
 
     # Set the variables
     if os.path.isfile(filename):
         data = pychemia.code.octopus.InputVariables(filename)
-        for i in toset.keys():
+        for i in list(toset.keys()):
             data.variables[i] = toset[i]
         for i in todel:
-            if i in data.variables.keys():
+            if i in list(data.variables.keys()):
                 data.variables.pop(i)
         data.write(filename)
     else:
-        print('ERROR: no filename', filename)
+        print(('ERROR: no filename', filename))

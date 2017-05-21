@@ -275,7 +275,7 @@ Empty structure
                 self.reduced = np.array([])
 
         if self.sites is None:
-            self.sites = range(self.natom)
+            self.sites = list(range(self.natom))
 
         if self.occupancies is None:
             self.occupancies = self.natom * [1.0]
@@ -351,7 +351,7 @@ Empty structure
         Return the CM as a numpy array
         """
         if list_of_atoms is None:
-            list_of_atoms = range(self.natom)
+            list_of_atoms = list(range(self.natom))
 
         total_mass = 0.0
         center_of_mass = np.zeros(3)
@@ -528,7 +528,7 @@ Empty structure
         while stabilization_history < stabilization_number:
             args = list(best_volume * np.ones(10))
 
-            ret = pool.map(worker_star, zip(repeat(method), repeat(composition), repeat(periodic), args))
+            ret = pool.map(worker_star, list(zip(repeat(method), repeat(composition), repeat(periodic), args)))
 
             ngood = 0
             for structure in ret:
@@ -562,7 +562,7 @@ Empty structure
         if best_structure is not None and periodic:
             # Analysis of the quality for the best structure
             rpos = best_structure.reduced
-            for i, j in combinations(range(natom), 2):
+            for i, j in combinations(list(range(natom)), 2):
                 distance = best_structure.lattice.minimal_distance(rpos[i], rpos[j])
                 covalent_distance = sum(covalent_radius([symbols[i], symbols[j]]))
                 if distance < covalent_distance:
@@ -774,7 +774,7 @@ Empty structure
             ret['name'] = self.name
         if self.comment is not None:
             ret['comment'] = self.comment
-        if self.sites != range(self.natom):
+        if self.sites != list(range(self.natom)):
             ret['sites'] = list(self.sites)
         if self.occupancies != self.natom * [1.0]:
             ret['occupancies'] = self.occupancies
@@ -822,7 +822,7 @@ Empty structure
         if 'sites' in structdict:
             sites = structdict['sites']
         else:
-            sites = range(natom)
+            sites = list(range(natom))
         if 'occupancies' in structdict:
             occupancies = structdict['occupancies']
         else:
@@ -878,7 +878,7 @@ Empty structure
 
     def valence_electrons(self):
         ret = 0
-        for key, value in self.composition.items():
+        for key, value in list(self.composition.items()):
             ret += value * valence(key)
         return ret
 

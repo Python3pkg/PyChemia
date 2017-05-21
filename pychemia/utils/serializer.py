@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 from builtins import str
 import json
 from abc import ABCMeta, abstractproperty
@@ -7,12 +7,11 @@ from pychemia.utils.computing import deep_unicode
 from numbers import Integral, Real
 
 
-class PyChemiaJsonable(object):
+class PyChemiaJsonable(object, metaclass=ABCMeta):
     """
     Abstract base class specifying how to convert objects from/to dictionaries.
     PyChemiaJsonable objects must implement a to_dict property and a from_dict static method.
     """
-    __metaclass__ = ABCMeta
 
     @abstractproperty
     def to_dict(self):
@@ -35,7 +34,7 @@ class PyChemiaJsonable(object):
         for key in json_dict:
             argstring += key + '=' + str(json_dict[key]) + ', '
         argstring = argstring[:-2]
-        print(str(cls) + '(' + argstring + ')')
+        print((str(cls) + '(' + argstring + ')'))
         return eval(str(cls) + '(' + argstring + ')')
 
     @property

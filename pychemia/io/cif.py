@@ -61,7 +61,7 @@ class CIF:
     @classmethod
     def _process_block(cls, blk):
 
-        for x in blk.keys():
+        for x in list(blk.keys()):
 
             if x in ['_cell_length_a', '_cell_length_b', '_cell_length_c', '_cell_angle_alpha',
                      '_cell_angle_beta', '_cell_angle_gamma', '_cell_volume']:
@@ -71,12 +71,12 @@ class CIF:
                 blk[x] = int(blk[x])
 
             elif x.startswith('loop'):
-                if blk[x].keys()[0] == '_symmetry_equiv_pos_site_id':
-                    for y in blk[x].keys()[2:]:
+                if list(blk[x].keys())[0] == '_symmetry_equiv_pos_site_id':
+                    for y in list(blk[x].keys())[2:]:
                         blk[x][int(y)] = blk[x][y][1:-1]
                         blk[x].pop(y)
-                elif blk[x].keys()[0] == '_atom_site_type_symbol':
-                    for y in blk[x].keys():
+                elif list(blk[x].keys())[0] == '_atom_site_type_symbol':
+                    for y in list(blk[x].keys()):
                         tokens = blk[x][y].split()
                         if len(tokens) == 6:
                             blk[x][y] = (tokens[0], int(tokens[1]), float(tokens[2]),
@@ -98,7 +98,7 @@ class CIFStructure:
     def __init__(self, cif_blocks, title=None):
 
         if title is None:
-            title = cif_blocks.keys()[0]
+            title = list(cif_blocks.keys())[0]
         self.data = cif_blocks[title]
 
     def get_lattice(self):
@@ -120,30 +120,30 @@ class CIFStructure:
     def get_symmetry_operations(self):
 
         ret = []
-        for x in self.data.keys():
+        for x in list(self.data.keys()):
             if x.startswith('loop'):
 
                 for symmetry_label in ["_symmetry_equiv_pos_as_xyz",
                                        "_symmetry_equiv_pos_as_xyz_",
                                        "_space_group_symop_operation_xyz",
                                        "_space_group_symop_operation_xyz_"]:
-                    if symmetry_label in self.data[x].keys():
-                        ret = [self.data[x][y] for y in self.data[x].keys() if self.data[x][y] != '']
+                    if symmetry_label in list(self.data[x].keys()):
+                        ret = [self.data[x][y] for y in list(self.data[x].keys()) if self.data[x][y] != '']
                         break
 
         if not ret:
-            print(self.data.keys())
+            print((list(self.data.keys())))
             for symmetry_label in ["_space_group_IT_number",
                                    "_space_group_IT_number_",
                                    "_symmetry_Int_Tables_number",
                                    "_symmetry_Int_Tables_number_"]:
 
-                if symmetry_label in self.data.keys():
+                if symmetry_label in list(self.data.keys()):
                     spg = self.data[symmetry_label]
                     print(spg)
                     break
         if not ret:
-            print(self.data.keys())
+            print((list(self.data.keys())))
             for symmetry_label in ["_symmetry_space_group_name_H-M",
                                    "_symmetry_space_group_name_H_M",
                                    "_symmetry_space_group_name_H-M_",
@@ -157,7 +157,7 @@ class CIFStructure:
                                    "_symmetry_space_group_name_h-m",
                                    "_symmetry_space_group_name_h-m_"]:
 
-                if symmetry_label in self.data.keys():
+                if symmetry_label in list(self.data.keys()):
                     spg = self.data[symmetry_label]
                     print(spg)
                     break
@@ -218,7 +218,7 @@ def cif_expand(path, dirname=None, verbose=False):
             cif = ""
     rf.close()
     if verbose:
-        print('Number of structures found: ', ndata)
+        print(('Number of structures found: ', ndata))
     return dirname
 
 
@@ -241,7 +241,7 @@ def is_multistructure(path, verbose=False):
         retval = True
 
     if verbose:
-        print('%4d structures in %s' % (ndata, path))
+        print(('%4d structures in %s' % (ndata, path)))
 
     return retval
 
@@ -261,13 +261,13 @@ def get_singlecifs(dirname, verbose=False):
     single_cifs = []
     lst = [x for x in _os.listdir(dirname) if x[-3:] == 'cif']
     if verbose:
-        print('Found ' + str(len(lst)) + ' cifs')
+        print(('Found ' + str(len(lst)) + ' cifs'))
 
     for cif in lst:
         path = dirname + '/' + cif
         if is_multistructure(path):
             if verbose:
-                print(path + ' is multistructure')
+                print((path + ' is multistructure'))
             cifdir = cif_expand(path)
             sublst = [x for x in _os.listdir(cifdir) if x[-3:] == 'cif']
             for subcif in sublst:

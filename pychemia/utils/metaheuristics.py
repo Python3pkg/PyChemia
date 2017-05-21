@@ -3,8 +3,7 @@ import numpy as np
 from abc import ABCMeta, abstractmethod
 
 
-class OptimizationTestFunction:
-    __metaclass__ = ABCMeta
+class OptimizationTestFunction(metaclass=ABCMeta):
     """
     General class for Test Functions used for optimization
     """

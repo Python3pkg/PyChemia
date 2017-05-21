@@ -90,7 +90,7 @@ def plot_history_energy(etotal, ekin, fcart, labels, bonds, filep):
         if i < len(forces) - 1:
             ax1.set_xticklabels([])
         if xmax < 20:
-            plt.xticks(range(int(xmax)))
+            plt.xticks(list(range(int(xmax))))
 
     pp.savefig()
 
@@ -131,7 +131,7 @@ def plot_history_energy(etotal, ekin, fcart, labels, bonds, filep):
         if i != list(bonds_dict.keys())[-1]:
             ax1.set_xticklabels([])
         if xmax < 20:
-            plt.xticks(range(int(xmax)))
+            plt.xticks(list(range(int(xmax))))
         bottom -= height
         plt.legend(loc=1)
 
@@ -180,7 +180,7 @@ def compute_bonds(typat, xcart, znucl):
 
 
 def compute_angles(bonds, natom):
-    print('natom', natom)
+    print(('natom', natom))
     itime = 0
 
     # Compute the number of bonds per atom
@@ -202,8 +202,8 @@ def compute_angles(bonds, natom):
 
             for i in range(len(index)):
                 for j in range(i + 1, len(index)):
-                    print('i=', i)
-                    print('j=', j)
+                    print(('i=', i))
+                    print(('j=', j))
                     # print nbonds
 
 

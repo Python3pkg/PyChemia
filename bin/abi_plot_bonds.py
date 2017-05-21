@@ -105,9 +105,9 @@ def plot_bonds(listabifile, listidtset):
         if len(ibond) != nbond:
             print('ERROR: Number of bonds changed')
             if not listidtset:
-                print(listabifile[n].basedir, 'contains', len(ibond), 'bonds')
+                print((listabifile[n].basedir, 'contains', len(ibond), 'bonds'))
             else:
-                print(listabifile[n].filename + ':' + listidtset[n], 'contains', len(ibond), 'bonds')
+                print((listabifile[n].filename + ':' + listidtset[n], 'contains', len(ibond), 'bonds'))
                 n += 1
 
     iplot = 1

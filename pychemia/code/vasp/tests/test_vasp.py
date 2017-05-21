@@ -11,7 +11,7 @@ class MyTestCase(unittest.TestCase):
         """
         Tests (pychemia.code.vasp) [INCAR parsing and writing]       :
         """
-        print(os.getcwd())
+        print((os.getcwd()))
         iv = pychemia.code.vasp.read_incar('pychemia/test/data/vasp_01/INCAR')
         self.assertEqual(len(iv), 12)
         self.assertEqual(iv.EDIFF, 1E-7)

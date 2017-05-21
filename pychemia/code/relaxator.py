@@ -2,9 +2,7 @@ from abc import ABCMeta, abstractmethod
 import numpy as np
 
 
-class Relaxator:
-    __metaclass__ = ABCMeta
-
+class Relaxator(metaclass=ABCMeta):
     def __init__(self, target_forces):
         self.target_forces = target_forces
 

@@ -48,7 +48,7 @@ if __name__ == '__main__':
                 figwidth = float(sys.argv[i + 1])
                 figheight = float(sys.argv[i + 2])
             else:
-                print('Unknown option. --' + option)
+                print(('Unknown option. --' + option))
         elif os.path.isfile(sys.argv[i]) and sys.argv[i][-4:] == '.dat':
             filelist.append(sys.argv[i])
 

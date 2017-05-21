@@ -80,11 +80,11 @@ def netcdf2dict(filename):
             NetCDF filename
     """
     if not os.path.isfile(filename):
-        print('ERROR: No such file: ', filename)
+        print(('ERROR: No such file: ', filename))
         return None
     ret = {}
     netcdfile = netcdf_file(filename, 'r', mmap=False)
-    for ii in netcdfile.variables.keys():
+    for ii in list(netcdfile.variables.keys()):
         ret[ii] = netcdfile.variables[ii][:]
     netcdfile.close()
 

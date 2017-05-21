@@ -114,7 +114,7 @@ def get_generation_limits(searcher, gen_size):
     i = 0
     while True:
         n = len(get_generation(searcher, i))
-        print(' [Generation %d: Number candidates = %d]' % (i, n))
+        print((' [Generation %d: Number candidates = %d]' % (i, n)))
         if n < gen_size:
             fingen = i
             break
@@ -211,12 +211,12 @@ def plot_generation_chart(searcher, gen_size):
     # Average energy of best structures
     print('Plot: Average energy of best structures')
     plt.figure(figsize=letterpage)
-    plt.plot(range(fingen), avg_energies, 'ro')
-    plt.plot(range(fingen), avg_energies, 'b--')
+    plt.plot(list(range(fingen)), avg_energies, 'ro')
+    plt.plot(list(range(fingen)), avg_energies, 'b--')
     plt.xlabel('Generation')
     plt.ylabel('Average energy of %d best structures' % navg_energy)
     plt.title('%s (tag=%s)' % (population.name, population.tag))
-    plt.xticks(range(fingen))
+    plt.xticks(list(range(fingen)))
     pdf.savefig()
     plt.close()
 

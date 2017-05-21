@@ -28,7 +28,7 @@ def test_distances():
     """
     Tests (pychemia.analysis.match)                              :
     """
-    print(os.getcwd())
+    print((os.getcwd()))
     st = pychemia.io.xyz.load('pychemia/test/data/xyz/chlorophyll.xyz')
     sa = pychemia.analysis.StructureAnalysis(st)
     distances = sa.all_distances()

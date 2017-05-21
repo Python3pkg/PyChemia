@@ -14,7 +14,7 @@ def test_anthracene():
     """
     Visualization of anthracene         :
     """
-    print(os.getcwd())
+    print((os.getcwd()))
     assert (os.path.isdir(path))
     filename = path + '/xyz/anthracene.xyz'
     assert (os.path.isfile(filename))
@@ -32,7 +32,7 @@ def test_chlorophyll():
     """
     Visualization of chlorophyll        :
     """
-    print(os.getcwd())
+    print((os.getcwd()))
     assert (os.path.isdir(path))
     filename = path + '/xyz/chlorophyll.xyz'
     assert (os.path.isfile(filename))

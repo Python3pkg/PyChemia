@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 import json
 import numpy as np
 from builtins import str
@@ -10,8 +10,7 @@ if HAS_PYMONGO:
     from pychemia.db import PyChemiaDB
 
 
-class Population:
-    __metaclass__ = ABCMeta
+class Population(metaclass=ABCMeta):
     """
     General class for all optimization algorithms that uses fixed and blocked
     Generations

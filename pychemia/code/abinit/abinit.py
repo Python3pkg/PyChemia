@@ -115,7 +115,7 @@ class AbinitJob(Codes):
 
     def set_kpoints(self, kpoints=None):
         self.kpoints = kpoints
-        if 'ngkpt' not in self.inp.variables.keys():
+        if 'ngkpt' not in list(self.inp.variables.keys()):
             if self.kpoints is None:
                 self.inp.set_value('kptrlen', 1)
             elif self.kpoints.kmode != 'gamma':

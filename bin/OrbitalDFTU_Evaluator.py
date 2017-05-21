@@ -24,10 +24,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     basepath = args.basepath    
 
-    passwd = input('Password:')
+    passwd = eval(input('Password:'))
 
     if not os.path.isdir(args.basepath) or not os.path.isfile(basepath+'/abinit.in'):
-        print('ERROR: Wrong basepath %s' % basepath)
+        print(('ERROR: Wrong basepath %s' % basepath))
         parser.print_help()
         sys.exit(1)
 

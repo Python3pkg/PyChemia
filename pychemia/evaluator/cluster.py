@@ -26,7 +26,7 @@ def cluster_evaluator(db_settings, nparal):
     pcdb = pychemia.db.get_database(db_settings)
     population = pychemia.population.LJCluster(pcdb)
     population.recover()
-    print('Staring evaluator for %s' % population.name)
+    print(('Staring evaluator for %s' % population.name))
     while True:
         entry = population.pcdb.db.pychemia_entries.find_one({'status.' + population.tag: True,
                                                               'status.lock': {'$exists': False},

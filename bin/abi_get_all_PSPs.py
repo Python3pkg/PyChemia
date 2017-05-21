@@ -7,13 +7,13 @@
 # tarballs.
 # AE are the Hirshfeld All Electron (AE) densities
 
-from __future__ import print_function
+
 import os
 import ftplib
 from concurrent.futures import ThreadPoolExecutor
 
 try:
-    from urllib2 import urlopen
+    from urllib.request import urlopen
 except ImportError:
     from urllib.request import urlopen
 import tarfile

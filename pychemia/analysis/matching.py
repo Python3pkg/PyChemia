@@ -61,21 +61,21 @@ class StructureMatch:
             min_trace = 1E10
             best[specie] = None
             if self.structure1.natom < 7:
-                for i in itertools.permutations(range(len(distance_matrix))):
+                for i in itertools.permutations(list(range(len(distance_matrix)))):
                     if distance_matrix[:, np.array(i)].trace() < min_trace:
                         min_trace = distance_matrix[:, np.array(i)].trace()
                         best[specie] = i
             else:
                 # Only consider permutations of 2 positions
                 if len(distance_matrix) > 1:
-                    for ipar in itertools.permutations(range(len(distance_matrix)), 2):
+                    for ipar in itertools.permutations(list(range(len(distance_matrix))), 2):
                         i = list(range(len(distance_matrix)))
                         i[ipar[0]] = ipar[1]
                         i[ipar[1]] = ipar[0]
                         if distance_matrix[:, np.array(i)].trace() < min_trace:
                             min_trace = distance_matrix[:, np.array(i)].trace()
                             best[specie] = i
-                    for ipar in itertools.permutations(range(len(distance_matrix)), 4):
+                    for ipar in itertools.permutations(list(range(len(distance_matrix))), 4):
                         i = list(range(len(distance_matrix)))
                         i[ipar[0]] = ipar[1]
                         i[ipar[1]] = ipar[0]
@@ -87,7 +87,7 @@ class StructureMatch:
                 else:
                     best[specie] = [0]
 
-            print('For specie %s best permutation is %s' % (specie, str(best[specie])))
+            print(('For specie %s best permutation is %s' % (specie, str(best[specie]))))
 
         best_permutation = np.zeros(self.structure1.natom, dtype=int)
         index = 0

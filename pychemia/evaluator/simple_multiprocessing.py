@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from __future__ import print_function  # Compatibility between python 2 and 3
+  # Compatibility between python 2 and 3
 import os                              # Operating System module (create directories)
 import time                            # To create a sleeping timer
 import random
@@ -82,7 +82,7 @@ def run(to_evaluate, worker, nconcurrent=1, sleeping_time=120):
 
 if __name__ == '__main__':
 
-    to_evaluate = range(100)  # Creating 100 cases to evaluate
+    to_evaluate = list(range(100))  # Creating 100 cases to evaluate
     nconcurrent = 16          # Number of concurrent executions
 
     run(to_evaluate=to_evaluate, nconcurrent=nconcurrent, worker=maise_worker, sleeping_time=5)

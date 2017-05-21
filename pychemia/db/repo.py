@@ -161,7 +161,7 @@ class StructureEntry:
             rf = open(ifile, 'r')
             hash_ifile = hashlib.sha224(rf.read()).hexdigest()
 
-            if hash_ifile in hashs.values():
+            if hash_ifile in list(hashs.values()):
                 continue
 
             if ifile not in self.original_file:
@@ -359,7 +359,7 @@ class StructureRepository:
         for i in self.tags:
             for j in self.tags[i]:
                 if not os.path.isdir(self.path + '/' + j) or not os.path.isfile(self.path + '/' + j + '/metadata.json'):
-                    print('Removing', j)
+                    print(('Removing', j))
                     self.tags[i].remove(j)
         self.save()
 
@@ -448,7 +448,7 @@ class StructureRepository:
         return th, result_list
 
     def del_entry(self, entry):
-        print('Deleting ', entry.identifier)
+        print(('Deleting ', entry.identifier))
         for i in entry.tags:
             self.tags[i].remove(entry.identifier)
         _shutil.rmtree(entry.path)

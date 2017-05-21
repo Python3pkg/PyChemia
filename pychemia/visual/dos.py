@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import os
 import sys
 import numpy as np
@@ -99,7 +99,7 @@ class DensityOfStates:
         :return: (numpy.ndarray) Density of states values
         """
         if self.ncols > 1:
-            return self._dos[:, range(1, self.ncols + 1)]
+            return self._dos[:, list(range(1, self.ncols + 1))]
         else:
             return self._dos[:, 1]
 

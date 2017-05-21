@@ -31,7 +31,7 @@ def test_abinit_parser():
         inp = parser(wf.name)
         wf.close()
 
-        assert len(inp.keys()) == 11
+        assert len(list(inp.keys())) == 11
         assert inp['inputvar1'] == array([1])
         assert inp['inputvar2'] == array([1.2])
         assert all(inp['inputvar3'] == 4 * ones(3))
@@ -53,7 +53,7 @@ def test_abinit_utils():
         from pychemia.code.abinit import xyz2input, netcdf2dict, psp_name
 
         filename = "pychemia/test/data/abinit_05/abinit-o_OUT.nc"
-        print(len(netcdf2dict(filename)))
+        print((len(netcdf2dict(filename))))
         assert len(netcdf2dict(filename)) == 310
         assert psp_name(1, 'LDA', 'FHI') == '01-H.LDA.fhi'
         filename = "pychemia/test/data/abinit_05/abinit_DS11.xyz"
@@ -84,7 +84,7 @@ def test_abinit_input():
         abf = AbiFiles(filename)
         inp = InputVariables(abf)
         print(inp)
-        print(len(inp))
+        print((len(inp)))
         assert len(inp) == 31
         assert inp.get_value('ecut') == 10
         assert len(inp.get_dtsets_keys()) == 12

@@ -19,13 +19,13 @@ def test_queue():
 
     source = 'pychemia/test/data/vasp_01'
     destination = tempfile.mkdtemp()
-    print('Destination: %s' % destination)
+    print(('Destination: %s' % destination))
 
     st = pychemia.code.vasp.read_poscar(source + os.sep + 'POSCAR')
-    print('Structure: \n%s' % st)
+    print(('Structure: \n%s' % st))
 
     vi = pychemia.code.vasp.read_incar(source + os.sep + 'INCAR')
-    print('VASP Input: \n%s' % vi)
+    print(('VASP Input: \n%s' % vi))
 
     pq = pychemia.db.PyChemiaQueue()
 
@@ -33,7 +33,7 @@ def test_queue():
     entry_id = pq.new_entry(structure=st, variables=vi, code='vasp', files=files)
 
     nfiles = pq.db.fs.files.count()
-    print('Number of files: ', nfiles)
+    print(('Number of files: ', nfiles))
 
     pychemia.code.vasp.write_from_queue(pq, entry_id, destination)
 
@@ -46,7 +46,7 @@ def test_queue():
     entry_id = pq.new_entry(structure=st, variables=vi, code='vasp', files=files)
 
     assert nfiles == pq.db.fs.files.count()
-    print('The number of files remains the same ', nfiles)
+    print(('The number of files remains the same ', nfiles))
 
     shutil.rmtree(destination)
 

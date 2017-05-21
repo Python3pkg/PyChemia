@@ -87,7 +87,7 @@ if __name__ == '__main__':
             elif option == 'nhours':
                 nhours = int(sys.argv[istruct + 1])
             else:
-                print('Unknown option. --' + option)
+                print(('Unknown option. --' + option))
 
     if path is None or user is None or queue is None:
         help_info()
@@ -100,16 +100,16 @@ if __name__ == '__main__':
 
     for istruct in found_structures:
         if os.path.isfile(istruct + os.sep + 'lock'):
-            print("Locked:    %s" % istruct)
+            print(("Locked:    %s" % istruct))
         elif os.path.basename(istruct) in jobs:
-            print('Submitted: %s' % istruct)
+            print(('Submitted: %s' % istruct))
         else:
-            print('To submit: %s' % istruct)
+            print(('To submit: %s' % istruct))
             rr = pychemia.runner.PBSRunner(istruct)
             rr.initialize(nodes=1, ppn=nparal, mail=mail, queue=queue, walltime=[0, nhours, 0, 0])
             structure_file = get_structure_file(istruct)
             if structure_file is None:
-                print('No suitable structure was found on: ', istruct)
+                print(('No suitable structure was found on: ', istruct))
             rr.set_template('pcm_vasp_relaxator.py --binary %s --nparal %d --structure_file %s'
                             % (binary, nparal, structure_file))
             rr.write_pbs()

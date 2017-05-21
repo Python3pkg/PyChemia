@@ -73,15 +73,15 @@ if __name__ == '__main__':
         db_settings['passwd'] = args.passwd
     print('pyChemia Evaluator using VASP')
     print('')
-    print('dbname    : %s' % args.dbname)
-    print('source_dir: %s' % args.source_dir)
+    print(('dbname    : %s' % args.dbname))
+    print(('source_dir: %s' % args.source_dir))
     print('')
-    print('host      : %s' % args.host)
-    print('port      : %d' % args.port)
-    print('user      : %s' % args.user)
-    print('replicaset: %s' % args.replicaset)
-    print('binary    : %s' % str(args.binary))
-    print('ssl       : %s' % str(args.ssl))
+    print(('host      : %s' % args.host))
+    print(('port      : %d' % args.port))
+    print(('user      : %s' % args.user))
+    print(('replicaset: %s' % args.replicaset))
+    print(('binary    : %s' % str(args.binary)))
+    print(('ssl       : %s' % str(args.ssl)))
 
     assert(len(args.dbname) == len(args.source_dir))
 
@@ -89,13 +89,13 @@ if __name__ == '__main__':
 
         for idb in range(len(args.dbname)):
 
-            print('DATABASE: %s' % args.dbname[idb])
+            print(('DATABASE: %s' % args.dbname[idb]))
             db_settings['name'] = args.dbname[idb]
             pcdb = pychemia.db.get_database(db_settings)
             popu = pychemia.population.NonCollinearMagMoms(pcdb, source_dir=args.source_dir[idb])
 
-            print('Number of candidates evaluated: %d' % len(popu.actives_evaluated))
-            print('Number of candidates not evaluated: %d' % len(popu.actives_no_evaluated))
+            print(('Number of candidates evaluated: %d' % len(popu.actives_evaluated)))
+            print(('Number of candidates not evaluated: %d' % len(popu.actives_no_evaluated)))
 
             to_compute = popu.actives_no_evaluated
 
@@ -110,7 +110,7 @@ if __name__ == '__main__':
                 if str(ijob) not in jobnames:
                     data_collected = popu.collect_data(ijob, workdir=source_dir + os.sep + str(ijob))
                     if not data_collected:
-                        print('Preparing and submitting job: %s' % str(ijob))
+                        print(('Preparing and submitting job: %s' % str(ijob)))
                         popu.prepare_folder(ijob, workdir=source_dir + os.sep + str(ijob))
 
                         pbs = pychemia.runner.PBSRunner(source_dir + os.sep + str(ijob))
@@ -120,6 +120,6 @@ if __name__ == '__main__':
                         pbs.write_pbs()
                         pbs.submit()
                 else:
-                    print('Job %s is on queue or running' % str(ijob))
+                    print(('Job %s is on queue or running' % str(ijob)))
         print('I will be waiting for 60 minutes before checking new candidates')
         time.sleep(3600)

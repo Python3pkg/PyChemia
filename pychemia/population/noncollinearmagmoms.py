@@ -341,7 +341,7 @@ class NonCollinearMagMoms(Population):
             if 'energy' in vo.final_data:
                 if 'free_energy' in vo.final_data['energy']:
                     energy = vo.final_data['energy']['free_energy']
-                    print('Uploading energy data for %s' % entry_id)
+                    print(('Uploading energy data for %s' % entry_id))
                     self.set_in_properties(entry_id, 'energy', energy)
                     return True
                 else:

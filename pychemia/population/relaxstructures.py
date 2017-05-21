@@ -133,9 +133,9 @@ class RelaxStructures(Population):
             raise ValueError('No composition associated to this population')
         factor = np.random.randint(self.min_comp_mult, self.max_comp_mult + 1)
         comp = self.composition.composition.copy()
-        print("Initail composition: %s" % comp)
-        print(Composition(comp))
-        print(Composition(comp).symbols)
+        print(("Initail composition: %s" % comp))
+        print((Composition(comp)))
+        print((Composition(comp).symbols))
         for i in comp:
             comp[i] *= factor
         new_comp = Composition(comp)
@@ -144,10 +144,10 @@ class RelaxStructures(Population):
                 new_comp.symbols[i] = "Ca"
             else:
                 new_comp.symbols[i] = "Mg"
-        print(new_comp.symbols)
+        print((new_comp.symbols))
 
         print("###############################################################")
-        print("New comp symbols= ", new_comp.symbols)
+        print(("New comp symbols= ", new_comp.symbols))
         print("###############################################################")
 
         while True:
@@ -167,19 +167,19 @@ class RelaxStructures(Population):
                 pcm_log.debug('From source')
                 entry_id = self.sources[factor][np.random.randint(0, len(self.sources[factor]))]
                 structure = self.pcdb_source.get_structure(entry_id)
-                print("chosen structure from database =", structure)
+                print(("chosen structure from database =", structure))
                 sym = CrystalSymmetry(structure)
 
                 scale_factor = float(np.max(covalent_radius(new_comp.species)) /
                                      np.max(covalent_radius(structure.species)))
                 reduce_scale = scale_factor ** (1. / 3)    # WIH
                 msg = 'Mult: %d natom: %d From source: %s Spacegroup: %d Scaling: %7.3f'
-                print(msg % (factor, structure.natom, structure.formula, sym.number(), scale_factor))
+                print((msg % (factor, structure.natom, structure.formula, sym.number(), scale_factor)))
                 # structure.set_cell(np.dot(scale_factor * np.eye(3), structure.cell)) # WIH
                 structure.set_cell(np.dot(reduce_scale * np.eye(3), structure.cell))  # WIH
-                print("symbols before change = ", structure.symbols)
+                print(("symbols before change = ", structure.symbols))
                 structure.symbols = new_comp.symbols
-                print("symbols after change = ", structure.symbols)
+                print(("symbols after change = ", structure.symbols))
                 self.sources[factor].remove(entry_id)
                 break
 
@@ -226,7 +226,7 @@ class RelaxStructures(Population):
         for i in ids:
             values[i] = self.value(i)
         selection = self.ids_sorted(ids)
-        print('Searching duplicates in %d structures' % len(selection))
+        print(('Searching duplicates in %d structures' % len(selection)))
         for i in range(len(selection) - 1):
             entry_id = selection[i]
             value_i = values[entry_id]
@@ -248,7 +248,7 @@ class RelaxStructures(Population):
     def cleaned_from_duplicates(self, ids):
         selection = self.ids_sorted(ids)
         duplicates_dict = self.check_duplicates(selection)
-        return [x for x in selection if x not in duplicates_dict.keys()]
+        return [x for x in selection if x not in list(duplicates_dict.keys())]
 
     def diff_values_matrix(self):
 
@@ -320,7 +320,7 @@ class RelaxStructures(Population):
                                           'structure.natom': {'$lte': self.min_comp_mult * comp.natom,
                                                               '$gte': self.max_comp_mult * comp.natom}}):
             if index < sizemax:
-                print('Adding entry ' + str(entry['_id']) + ' from ' + readdb.name)
+                print(('Adding entry ' + str(entry['_id']) + ' from ' + readdb.name))
                 self.new_entry(readdb.get_structure(entry['_id']))
                 index += 1
 

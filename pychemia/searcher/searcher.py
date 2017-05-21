@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import time
 from abc import ABCMeta, abstractmethod
 from pychemia import pcm_log, HAS_PYMONGO
@@ -7,8 +7,7 @@ if HAS_PYMONGO:
     import bson
 
 
-class Searcher:
-    __metaclass__ = ABCMeta
+class Searcher(metaclass=ABCMeta):
     """
     General class for all optimization algorithms that uses fixed and blocked
     Generations
@@ -57,7 +56,7 @@ class Searcher:
                 lineage_inv = lineage_data['lineage_inv']
 
                 changed = False
-                for i in lineage.keys():
+                for i in list(lineage.keys()):
                     for j in lineage[i]:
                         if j == 'None':
                             lineage[i].remove(j)
@@ -69,13 +68,13 @@ class Searcher:
                 sizes = [len(lineage[x]) for x in lineage]
                 assert min(sizes) == max(sizes)
 
-                for i in lineage.keys():
+                for i in list(lineage.keys()):
                     if HAS_PYMONGO:
                         self.lineage[i] = [bson.ObjectId(x) for x in lineage[i]]
                     else:
                         self.lineage[i] = [x for x in lineage[i]]
 
-                for i in lineage_inv.keys():
+                for i in list(lineage_inv.keys()):
                     if HAS_PYMONGO:
                         self.lineage_inv[bson.ObjectId(i)] = lineage_inv[i]
                     else:
@@ -231,7 +230,7 @@ class Searcher:
         self.write_change(father, change)
         if father not in self.lineage_inv:
             print('%s not in current lineage' % father)
-            print('Lineages %s' % self.lineage_inv.keys())
+            print('Lineages %s' % list(self.lineage_inv.keys()))
             raise ValueError('Father not in lineage')
         slot = self.lineage_inv[father]
         self.lineage[slot].append(None)
@@ -275,11 +274,11 @@ class Searcher:
                     self.pcdb.db.generations.update({'_id': entry_id}, {'$set': {self.searcher_id: info}})
 
             lineage = {}
-            for i in self.lineage.keys():
+            for i in list(self.lineage.keys()):
                 lineage[i] = [str(x) for x in self.lineage[i]]
 
             lineage_inv = {}
-            for i in self.lineage_inv.keys():
+            for i in list(self.lineage_inv.keys()):
                 lineage_inv[str(i)] = self.lineage_inv[i]
 
             if self.pcdb.db.lineage.find_one({'_id': self.searcher_id}) is None:

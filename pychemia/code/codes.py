@@ -3,9 +3,7 @@ import os
 import subprocess
 
 
-class Codes:
-    __metaclass__ = ABCMeta
-
+class Codes(metaclass=ABCMeta):
     def __init__(self):
         self.stdin_file = None
         self.stdout_file = None

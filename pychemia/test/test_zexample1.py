@@ -32,8 +32,8 @@ def test_example1():
         creation(workdir)
         execution(workdir)
         ecut, etotal = datamining(workdir)
-        print('ecut=', ecut)
-        print('etotal=', etotal)
+        print(('ecut=', ecut))
+        print(('etotal=', etotal))
         assert ecut == 15.0
         assert abs(etotal + 4.199348203363531) < 0.001
         shutil.rmtree(workdir)
@@ -104,7 +104,7 @@ def datamining(filep):
     else:
         data = pa.netcdf2dict(path + os.sep + 'abinit_04' + os.sep + 'abinit-o_OUT.nc')
     print(data)
-    print(data['ecut'], data['etotal'])
+    print((data['ecut'], data['etotal']))
     return data['ecut'], data['etotal']
 
 

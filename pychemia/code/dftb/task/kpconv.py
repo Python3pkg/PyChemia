@@ -67,7 +67,7 @@ class KPointConvergence:
                         if os.path.exists(filename):
                             ret = read_detailed_out(filename)
                             line = 'KPoint_grid= %15s  iSCC= %4d  Total_energy= %10.4f  SCC_error= %9.3E'
-                            print(line % (grid, ret['SCC']['iSCC'], ret['total_energy'], ret['SCC']['SCC_error']))
+                            print((line % (grid, ret['SCC']['iSCC'], ret['total_energy'], ret['SCC']['SCC_error'])))
                         else:
                             print('detailed.out could not be found, exiting...')
                             return

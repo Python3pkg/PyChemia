@@ -5,16 +5,16 @@ import numpy as np
 def plot_energy(path):
     import matplotlib.pylab as plt
     if not os.path.isdir(path):
-        print('ERROR: No such dir ', path)
+        print(('ERROR: No such dir ', path))
         return None
     if not os.path.isfile(path + '/td.general/energy'):
-        print('ERROR: No energy file ', path + '/td.general/energy')
+        print(('ERROR: No energy file ', path + '/td.general/energy'))
         return None
 
     data = np.loadtxt(path + '/td.general/energy')
 
     if len(data) == 0:
-        print('No data on ', path + '/td.general/energy')
+        print(('No data on ', path + '/td.general/energy'))
         return None
 
     plt.clf()
@@ -33,7 +33,7 @@ def plot_energy(path):
             nstep += 1
         if i != 0 and data[i, -3] != 0.0:
             break
-    print('Complete data each', nstep, ' steps')
+    print(('Complete data each', nstep, ' steps'))
 
     for i in range(9):
         plt.subplot(330 + i + 1)

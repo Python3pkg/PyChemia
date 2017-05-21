@@ -22,14 +22,12 @@ def execute(basedir, command, script):
     if not _os.path.isfile(basedir + '/' + _os.path.basename(script)):
         _shutil.copy(script, basedir)
     _os.chdir(basedir)
-    print('Executing... ' + command + ' ' + script)
+    print(('Executing... ' + command + ' ' + script))
     _subprocess.call([command, script])
     _os.chdir(cwd)
 
 
-class Evaluator:
-    __metaclass__ = ABCMeta
-
+class Evaluator(metaclass=ABCMeta):
     def __init__(self):
         self.population = None
 

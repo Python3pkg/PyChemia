@@ -43,7 +43,7 @@ class AbiFiles:
                 self.files['tmpin'] = inputfile.readline()[:-1]
                 self.files['tmpout'] = inputfile.readline()[:-1]
                 self.files['tmp'] = inputfile.readline()[:-1]
-                self.files['psps'] = map(str.strip, inputfile.readlines())
+                self.files['psps'] = list(map(str.strip, inputfile.readlines()))
 
             elif _os.path.isdir(args[0]):
                 self.basedir = args[0]
@@ -54,7 +54,7 @@ class AbiFiles:
         if len(kwargs) > 0:
             if 'basedir' in kwargs:
                 self.basedir = kwargs['basedir']
-                print(self.filename)
+                print((self.filename))
             if 'filename' in kwargs:
                 self.filename = kwargs['filename']
             if 'files' in kwargs:

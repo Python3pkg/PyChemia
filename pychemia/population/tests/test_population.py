@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 import unittest
 # import unittest2 as unittest
 import os
@@ -70,7 +70,7 @@ class PopulationTest(unittest.TestCase):
         """
         if not has_connection():
             return
-        print(os.getcwd())
+        print((os.getcwd()))
         popu = OrbitalDFTU('test', './data/abinit_05/abinit.in')
         popu.add_random()
         popu.add_random()
